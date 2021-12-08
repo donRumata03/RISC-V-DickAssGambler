@@ -1,6 +1,9 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/RISC_V_DickAssGambler.dir/main.cpp.o"
-  "RISC_V_DickAssGambler"
+  "CMakeFiles/RISC_V_DickAssGambler.dir/main.cpp.obj"
+  "CMakeFiles/RISC_V_DickAssGambler.dir/main.cpp.obj.d"
+  "RISC_V_DickAssGambler.exe"
+  "RISC_V_DickAssGambler.exe.manifest"
+  "RISC_V_DickAssGambler.lib"
   "RISC_V_DickAssGambler.pdb"
 )
 

@@ -1,7 +1,7 @@
-/opt/clion-2020.2.1/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/vova/dev/Education/CompArch/RISC_V_DickAssGambler
-Platform: *nix
-Note that you should have an LLVM C++ compiler with version at least : otherwise it won't compile!
-C++ compiler is set to /usr/bin/clang++-
+"C:\Program Files\JetBrains\CLion 2021.3\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - NMake Makefiles" D:\Projects\Education\ComputerArch\CompArchLabs\Lab4\RISC-V-disassembler
+Platform: Windows
+Note that you should have MSVC compiler if it's Windows
+C++ compiler is set to C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.26.28801/bin/Hostx64/x64/cl.exe
 -- Configuring done
 -- Generating done
--- Build files have been written to: /home/vova/dev/Education/CompArch/RISC_V_DickAssGambler/cmake-build-debug
+-- Build files have been written to: D:/Projects/Education/ComputerArch/CompArchLabs/Lab4/RISC-V-disassembler/cmake-build-debug
