@@ -1,3 +1,0 @@
-D:/Projects/Education/ComputerArch/CompArchLabs/Lab4/RISC-V-disassembler/cmake-build-debug/CMakeFiles/RISC_V_Disassembler.dir
-D:/Projects/Education/ComputerArch/CompArchLabs/Lab4/RISC-V-disassembler/cmake-build-debug/CMakeFiles/edit_cache.dir
-D:/Projects/Education/ComputerArch/CompArchLabs/Lab4/RISC-V-disassembler/cmake-build-debug/CMakeFiles/rebuild_cache.dir
