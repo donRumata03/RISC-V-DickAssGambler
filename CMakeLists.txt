@@ -40,4 +40,10 @@ set(CMAKE_CXX_STANDARD 20)
 include_directories(${CMAKE_CURRENT_LIST_DIR})
 
 add_executable(RISC_V_Disassembler
-        main.cpp ElfHeader.h bit_utils.h tests/bit_utils_tests.h)
+        main.cpp ElfHeader.h bit_utils.h
+
+)
+
+
+
+add_subdirectory(tests)
