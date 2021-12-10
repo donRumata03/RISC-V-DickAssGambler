@@ -2,13 +2,9 @@
 // Created by vova on 08.12.2021.
 //
 
-
 #pragma once
 
-#include <cstdint>
-#include <type_traits>
-#include <bit>
-#include <iostream>
+#include "pch.h"
 
 constexpr bool is_big_endian() {
 	return std::endian::native == std::endian::big;

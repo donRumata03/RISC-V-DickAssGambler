@@ -5,6 +5,7 @@
 #ifndef RISC_V_DICKASSGAMBLER_ELFHEADER_H
 #define RISC_V_DICKASSGAMBLER_ELFHEADER_H
 
+#include "pch.h"
 
 class ElfHeader
 {
