@@ -10,7 +10,7 @@
 TEST(FileSystem, ReadBytes) {
 	auto test_path = disassembler_base_dir / "tests" / "test_text.txt";
 	std::cout << "Reading file: " << test_path << "\n";
-	auto bytes = read_bytes(disassembler_base_dir);
+	auto bytes = read_bytes(test_path);
 	std::string s (bytes.begin(), bytes.end());
 	std::cout << s << "\n";
 }

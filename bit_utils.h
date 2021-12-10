@@ -46,8 +46,8 @@ void dump_bytes(T v, char term = '\n') {
 }
 
 
-
-inline std::string format_hex_prefixless(std::integral auto v) {
+template<std::integral T>
+inline std::string format_hex_prefixless(T v) {
 	auto ss = std::stringstream{};
 
 	ss << std::hex << v;
@@ -56,6 +56,7 @@ inline std::string format_hex_prefixless(std::integral auto v) {
 }
 
 
-inline std::string format_hex(std::integral auto v) {
+template<std::integral T>
+inline std::string format_hex(T v) {
 	return "0x" + format_hex_prefixless(v);
 }
