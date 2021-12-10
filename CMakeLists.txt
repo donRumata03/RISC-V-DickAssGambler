@@ -8,11 +8,7 @@ set(MINIMAL_GCC_VERSION 10)
 
 if (WIN32)
     message("Platform: Windows")
-    if(MSVC)
-
-    else()
-        message(FATAL_ERROR "Compiler should be MSVC on Windows")
-    endif()
+    message("Note that you should have MSVC compiler if it's Windows")
 endif()
 
 
@@ -37,10 +33,17 @@ endif()
 message("C++ compiler is set to ${CMAKE_CXX_COMPILER}")
 
 
-project(RISC_V_DickAssGambler)
+project(RISC_V_Disassembler)
 
 set(CMAKE_CXX_STANDARD 20)
 
 include_directories(${CMAKE_CURRENT_LIST_DIR})
 
-add_executable(RISC_V_DickAssGambler main.cpp ElfHeader.h bit_utils.h tests/bit_utils_tests.h)
+add_executable(RISC_V_Disassembler
+        main.cpp ElfHeader.h bit_utils.h
+
+)
+
+
+
+add_subdirectory(tests)

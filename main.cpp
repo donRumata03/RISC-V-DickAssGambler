@@ -8,11 +8,12 @@
 #include <cassert>
 #include "bit_utils.h"
 
-#include "tests/bit_utils_tests.h"
 
 int main()
 {
-	test_reversing();
+	check_platform_parameters();
+
+//	test_reversing();
 
 	return 0;
 }

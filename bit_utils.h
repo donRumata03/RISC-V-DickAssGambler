@@ -22,9 +22,9 @@ void check_platform_parameters() {
 	);
 
 	if constexpr (std::endian::native == std::endian::big)
-		std::cout << "[INFO]: Your native endianness is big-endian. But you could do better...";
+		std::cout << "[INFO]: Your native endianness is big-endian. But you could do better...\n";
 	else if constexpr (std::endian::native == std::endian::little)
-		std::cout << "[INFO]: Your native endianness is little-endian. Brilliant!";
+		std::cout << "[INFO]: Your native endianness is little-endian. Brilliant!\n";
 }
 
 template <typename T, std::enable_if_t<std::is_unsigned_v<T>, void*> literally_nothing = nullptr>

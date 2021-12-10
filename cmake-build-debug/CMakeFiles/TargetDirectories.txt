@@ -1,3 +1,0 @@
-/home/vova/dev/Education/CompArch/RISC_V_DickAssGambler/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/vova/dev/Education/CompArch/RISC_V_DickAssGambler/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/vova/dev/Education/CompArch/RISC_V_DickAssGambler/cmake-build-debug/CMakeFiles/RISC_V_DickAssGambler.dir
