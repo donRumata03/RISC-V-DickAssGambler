@@ -10,7 +10,7 @@ constexpr bool is_big_endian() {
 	return std::endian::native == std::endian::big;
 }
 
-void check_platform_parameters() {
+inline void check_platform_parameters() {
 	static_assert(sizeof(char) == 1, "You use such a weird system...");
 	static_assert(
 			std::endian::native == std::endian::big || std::endian::native == std::endian::little,
@@ -46,3 +46,16 @@ void dump_bytes(T v, char term = '\n') {
 }
 
 
+
+inline std::string format_hex_prefixless(std::integral auto v) {
+	auto ss = std::stringstream{};
+
+	ss << std::hex << v;
+
+	return ss.str();
+}
+
+
+inline std::string format_hex(std::integral auto v) {
+	return "0x" + format_hex_prefixless(v);
+}

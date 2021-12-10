@@ -41,7 +41,7 @@ include_directories(${CMAKE_CURRENT_LIST_DIR})
 
 
 add_executable(RISC_V_Disassembler
-        main.cpp ElfHeader.h
+        main.cpp ElfHeaderIdent.h
         bit_utils.h
         file_utils.h
 )

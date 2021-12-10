@@ -7,11 +7,12 @@
 
 #include "pch.h"
 
-std::vector<u8> read_bytes(const fs::path& filename) {
+inline std::vector<u8> read_bytes(const fs::path& filename) {
 	std::ifstream is(filename);
-
+	return {};
 	is.seekg(0, std::ios_base::end);
 	std::size_t file_length = is.tellg();
+	std::cout << file_length << std::endl;
 	is.seekg(0, std::ios_base::beg);
 
 	std::vector<u8> res(file_length);
