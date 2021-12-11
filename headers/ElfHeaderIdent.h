@@ -20,9 +20,9 @@ enum class ElfHeaderClass : u8 {
 	x64 = 2
 };
 
-// OS ABI identification (copy-pasted from LLVM library)
+// OS ABI identification (from LLVM library)
 enum class ElfOsABI : u8 {
-	SYSTEM_V = 0,           // UNIX System V ABI
+	SYSTEM_V = 0,       // UNIX System V ABI
 	HPUX = 1,           // HP-UX operating system
 	NETBSD = 2,         // NetBSD
 	GNU = 3,            // GNU/Linux
@@ -110,7 +110,6 @@ struct ElfHeaderIdent
 		return res;
 	}
 };
-#pragma pack(pop)
 
 static_assert(sizeof(ElfHeaderIdent) == 16);
 

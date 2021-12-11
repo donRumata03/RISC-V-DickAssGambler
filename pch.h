@@ -15,6 +15,7 @@
 #include <type_traits>
 #include <vector>
 
+#include <ranges>
 
 #include <filesystem>
 namespace fs = std::filesystem;

@@ -15,8 +15,8 @@
 struct ElfHeader {
 	ElfHeaderIdent ident;
 
-	u16 type;      // Type of file (see ET_* below)
-	u16 machine;   // Required architecture for this file (see EM_*)
+	u16 type;
+	u16 machine;   // Should be 0xF3 for RISC-V
 	u32 version;   // Must be equal to 1
 	u32 entry;     // Address to jump to in order to start program
 	u32 phoff;     // Program header table's file offset, in bytes
@@ -27,7 +27,7 @@ struct ElfHeader {
 	u16 phnum;     // Number of entries in the program header table
 	u16 shentsize; // Size of an entry in the section header table
 	u16 shnum;     // Number of entries in the section header table
-	u16 shstrndx;  // Sect hdr table index of sect name string table
+	u16 shstrndx;  // Contains index of the section header table entry that contains the section names.
 
 
 	static ElfHeader read_from_bytes(byte_view input_bytes) {
@@ -64,8 +64,12 @@ struct ElfHeader {
 		}
 		assert(res.ehsize == 52);
 
+//		assert(res.phentsize == 32);
+		assert(res.shentsize == 40);
+
 		return res;
 	}
 };
+#pragma pack(pop)
 
 static_assert(sizeof(ElfHeader) == 52);

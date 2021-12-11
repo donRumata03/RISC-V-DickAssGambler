@@ -42,11 +42,11 @@ include_directories(${CMAKE_CURRENT_LIST_DIR})
 
 add_executable(RISC_V_Disassembler
         main.cpp
-        ElfHeaderIdent.h
+        headers/ElfHeaderIdent.h
         generic_utils/bit_utils.h
         generic_utils/file_utils.h
         generic_utils/string_viewing_utils.h
-        generic_utils/formatting_utils.h ElfHeader.h)
+        generic_utils/formatting_utils.h headers/ElfHeader.h headers/SectionHeaderEntry.cpp headers/SectionHeaderEntry.h)
 
 target_precompile_headers(RISC_V_Disassembler PRIVATE pch.h)
 
