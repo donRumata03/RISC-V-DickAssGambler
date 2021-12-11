@@ -23,6 +23,21 @@ inline void check_platform_parameters() {
 		std::cout << "[INFO]: Your native endianness is little-endian. Brilliant!\n";
 }
 
+template<class T>
+std::string join(const std::vector<T>& strings, std::string_view separator = " ") {
+	std::string res;
+
+	for (size_t i = 0; i < strings.size(); ++i) {
+		if (i != 0) {
+			res += separator;
+		}
+		res += strings[i];
+	}
+
+	return res;
+}
+
+
 template <typename T, std::enable_if_t<std::is_unsigned_v<T>, void*> literally_nothing = nullptr>
 T reverse_byte_order(T number) {
 	T res{};
@@ -46,11 +61,11 @@ void dump_bytes(T v, char term = '\n') {
 }
 
 
-template<std::integral T>
+template<std::integral T, size_t fill_size = sizeof(T) * 2>
 inline std::string format_hex_prefixless(T v) {
 	auto ss = std::stringstream{};
 
-	ss << std::hex << v;
+	ss << std::hex << std::uppercase << std::setfill('0') << std::setw(fill_size) << v;
 
 	return ss.str();
 }
@@ -59,4 +74,14 @@ inline std::string format_hex_prefixless(T v) {
 template<std::integral T>
 inline std::string format_hex(T v) {
 	return "0x" + format_hex_prefixless(v);
+}
+
+
+inline std::string format_hex_sequence(std::basic_string_view<u8> bytes) {
+	std::vector<std::string> strings(bytes.size());
+	std::transform(bytes.begin(), bytes.end(), strings.begin(), [](u8 character){
+		return format_hex_prefixless<u16, 2>(u16(character));
+	});
+
+	return join(strings, " ");
 }

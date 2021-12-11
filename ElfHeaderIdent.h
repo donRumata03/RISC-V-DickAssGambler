@@ -5,6 +5,7 @@
 #pragma once
 #include "pch.h"
 #include "bit_utils.h"
+#include "string_utils.h"
 
 
 enum class ElfHeaderEndianness : unsigned char
@@ -27,8 +28,10 @@ struct ElfHeaderIdent
 	ElfHeaderEndianness endianness;
 	u8 version;
 
+	constexpr static std::string_view EXPECTED_ELF_SIGNATURE = "\x7f\x45\x4c\x46";
+
 	bool validate_signature() {
-		return std::string(elf_signature) == "\x7f\x45\x4c\x46";
+		return view_char_array<c8>(elf_signature) == EXPECTED_ELF_SIGNATURE;
 	}
 
 	static ElfHeaderIdent read_from_bytes(const std::vector<u8>& input_bytes) {
@@ -40,7 +43,12 @@ struct ElfHeaderIdent
 		ElfHeaderIdent res {*reference};
 
 		if (!res.validate_signature()) {
-			throw std::runtime_error("File signature doesn't match the ELF one");
+			throw std::runtime_error(
+					"File signature doesn't match the ELF one. Expected: "
+					+ format_hex_sequence(view_as<u8>(EXPECTED_ELF_SIGNATURE))
+					+ "; Actual: "
+					+ format_hex_sequence(bytes_view(view_char_array<u8>(res.elf_signature))
+					));
 		}
 
 		switch (res.endianness) {
@@ -50,7 +58,7 @@ struct ElfHeaderIdent
 				break;
 			default:
 				throw std::runtime_error(
-						"Unknown endianness byte: " + format_hex(u8(res.endianness))
+					"Unknown endianness byte: " + format_hex(u8(res.endianness))
 				);
 		}
 

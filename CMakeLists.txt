@@ -44,7 +44,7 @@ add_executable(RISC_V_Disassembler
         main.cpp ElfHeaderIdent.h
         bit_utils.h
         file_utils.h
-)
+        string_utils.h)
 
 target_precompile_headers(RISC_V_Disassembler PRIVATE pch.h)
 

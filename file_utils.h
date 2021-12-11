@@ -8,7 +8,10 @@
 #include "pch.h"
 
 inline std::vector<u8> read_bytes(const fs::path& filename) {
-	std::ifstream is(filename);
+	std::ifstream is(filename, std::ios::in | std::ios::binary);
+	if (!is.is_open()) {
+		throw std::runtime_error("Can't open file: " + filename.string());
+	}
 
 	is.seekg(0, std::ios_base::end);
 	std::size_t file_length = is.tellg();
