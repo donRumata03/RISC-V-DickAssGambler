@@ -70,7 +70,7 @@ struct ElfHeaderIdent
 		return view_char_array<c8>(elf_signature) == EXPECTED_ELF_SIGNATURE;
 	}
 
-	static ElfHeaderIdent read_from_bytes(const std::vector<u8>& input_bytes) {
+	static ElfHeaderIdent read_from_bytes(bytes_view input_bytes) {
 		if (input_bytes.size() < sizeof(ElfHeaderIdent)) {
 			throw std::runtime_error("Too short file: can't read the ELF header");
 		}

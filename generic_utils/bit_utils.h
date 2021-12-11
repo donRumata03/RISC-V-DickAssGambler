@@ -29,7 +29,7 @@ template <typename T, std::enable_if_t<std::is_unsigned_v<T>, void*> literally_n
 T reverse_byte_order(T number) {
 	T res{};
 
-	constexpr std::size_t bytes_T = sizeof(T);
+	constexpr usize bytes_T = sizeof(T);
 
 	for (size_t i = 0; i < bytes_T; ++i) {
 		res |= ((number >> (i * 8)) & T{0xFFU}) << ((bytes_T - i - 1) * 8);

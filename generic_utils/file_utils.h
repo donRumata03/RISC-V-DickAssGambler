@@ -7,7 +7,7 @@
 
 #include "pch.h"
 
-inline std::vector<u8> read_bytes(const fs::path& filename) {
+inline std::basic_string<u8> read_bytes(const fs::path& filename) {
 	std::ifstream is(filename, std::ios::in | std::ios::binary);
 	if (!is.is_open()) {
 		throw std::runtime_error("Can't open file: " + filename.string());
