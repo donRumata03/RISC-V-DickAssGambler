@@ -8,8 +8,8 @@
 
 #include "gtest/gtest.h"
 #include <cassert>
-#include <formatting_utils.h>
-#include "../bit_utils.h"
+#include <generic_utils/formatting_utils.h>
+#include "generic_utils/bit_utils.h"
 
 TEST(BitUtils, TestReversing)
 {
