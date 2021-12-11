@@ -29,7 +29,7 @@ struct ElfHeader {
 	u16 shstrndx;  // Sect hdr table index of sect name string table
 
 
-	static ElfHeader read_from_bytes(bytes_view input_bytes) {
+	static ElfHeader read_from_bytes(byte_view input_bytes) {
 		auto ident = ElfHeaderIdent::read_from_bytes(input_bytes); // May throw exceptions
 
 

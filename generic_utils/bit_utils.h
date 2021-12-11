@@ -25,7 +25,8 @@ inline void check_platform_parameters() {
 
 
 
-template <typename T, std::enable_if_t<std::is_unsigned_v<T>, void*> literally_nothing = nullptr>
+
+template <std::unsigned_integral T>
 T reverse_byte_order(T number) {
 	T res{};
 
@@ -38,3 +39,12 @@ T reverse_byte_order(T number) {
 	return res;
 }
 
+template <std::unsigned_integral T>
+void reverse_byte_order_in_place(T& number) {
+	number = reverse_byte_order(number);
+}
+
+template<class ...T>
+void reverse_all(T&... args) {
+	(reverse_byte_order_in_place(args), ...);
+}

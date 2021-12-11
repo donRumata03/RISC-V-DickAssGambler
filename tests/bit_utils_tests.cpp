@@ -41,3 +41,18 @@ TEST(BitUtils, TestReversing)
 			reverse_byte_order(z), 0xEFCDAB8967452301ull
 	);
 }
+
+TEST(BitUtils, TestAllReversing)
+{
+	auto a = u8{0xFEu};
+	auto b = u16(0xCAFE);
+	auto c = u32(0xDEADBEEFu);
+	auto d = u64 { 0x0123456789ABCDEFull };
+
+	reverse_all(a, b, c, d);
+
+	EXPECT_EQ(a, u8{0xFEu});
+	EXPECT_EQ(b, u16{0xFECA});
+	EXPECT_EQ(c, u32{0xEFBEADDEu});
+	EXPECT_EQ(d, u64{0xEFCDAB8967452301ull});
+}

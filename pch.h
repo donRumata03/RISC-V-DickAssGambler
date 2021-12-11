@@ -35,4 +35,5 @@ using i64 = std::int64_t;
 using usize = std::size_t;
 using isize = std::ptrdiff_t;
 
-using bytes_view = std::basic_string_view<u8>;
+using byte_view = std::basic_string_view<u8>;
+using byte_string = std::basic_string<u8>;

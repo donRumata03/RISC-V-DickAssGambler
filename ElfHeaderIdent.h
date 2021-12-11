@@ -70,7 +70,7 @@ struct ElfHeaderIdent
 		return view_char_array<c8>(elf_signature) == EXPECTED_ELF_SIGNATURE;
 	}
 
-	static ElfHeaderIdent read_from_bytes(bytes_view input_bytes) {
+	static ElfHeaderIdent read_from_bytes(byte_view input_bytes) {
 		if (input_bytes.size() < sizeof(ElfHeaderIdent)) {
 			throw std::runtime_error("Too short file: can't read the ELF header");
 		}
@@ -83,7 +83,7 @@ struct ElfHeaderIdent
 					"File signature doesn't match the ELF one. Expected: "
 					+ format_hex_sequence(view_as<u8>(EXPECTED_ELF_SIGNATURE))
 					+ "; Actual: "
-					+ format_hex_sequence(bytes_view(view_char_array<u8>(res.elf_signature))
+					+ format_hex_sequence(byte_view(view_char_array<u8>(res.elf_signature))
 					));
 		}
 
