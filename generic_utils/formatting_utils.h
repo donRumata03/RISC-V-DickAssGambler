@@ -75,11 +75,11 @@ std::string format_hex(T v) {
 }
 
 
-inline std::string format_hex_sequence (std::basic_string_view<u8> bytes)
+inline std::string format_hex_sequence (byte_view bytes)
 {
 	std::vector<std::string> strings(bytes.size());
 	std::transform(bytes.begin(), bytes.end(), strings.begin(), [](u8 character){
-		return format_hex_prefixless(u16(character));
+		return format_hex_prefixless(character);
 	});
 
 	return join(strings, " ");

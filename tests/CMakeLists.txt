@@ -6,5 +6,5 @@ add_subdirectory(lib)
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 # 'Google_Tests_run' is the target name
-add_executable(Google_Tests_run bit_utils_tests.cpp e_ident_test.cpp filesystem_tests.cpp detect_locations.h)
+add_executable(Google_Tests_run bit_utils_tests.cpp e_ident_test.cpp filesystem_tests.cpp detect_locations.h full_header_test.cpp)
 target_link_libraries(Google_Tests_run gtest gtest_main)

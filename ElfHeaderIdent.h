@@ -110,6 +110,7 @@ struct ElfHeaderIdent
 		return res;
 	}
 };
+#pragma pack(pop)
 
 static_assert(sizeof(ElfHeaderIdent) == 16);
 
