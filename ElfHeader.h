@@ -59,6 +59,9 @@ struct ElfHeader {
 			throw std::runtime_error("„Version” should be equal to 1. Actual: " + format_hex_sequence(view_as<u8>(res.version)));
 		}
 
+		if (res.machine != 0xF3) {
+			throw std::runtime_error("Only RISC-V is supported");
+		}
 		assert(res.ehsize == 52);
 
 		return res;
