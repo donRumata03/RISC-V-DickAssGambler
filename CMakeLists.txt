@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.17)
 
-#set(LINUX_COMPILER_CHOSEN GCC)
-set(LINUX_COMPILER_CHOSEN CLANG)
+set(LINUX_COMPILER_CHOSEN GCC)
+#set(LINUX_COMPILER_CHOSEN CLANG)
 
 set(REQUIRED_CLANG_VERSION 12)
 set(REQUIRED_GCC_VERSION 10)
@@ -46,7 +46,7 @@ add_executable(RISC_V_Disassembler
         generic_utils/bit_utils.h
         generic_utils/file_utils.h
         generic_utils/string_viewing_utils.h
-        generic_utils/formatting_utils.h)
+        generic_utils/formatting_utils.h ElfHeader.h)
 
 target_precompile_headers(RISC_V_Disassembler PRIVATE pch.h)
 
