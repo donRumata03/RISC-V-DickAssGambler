@@ -21,12 +21,12 @@ void dump_bytes(T v, char term = '\n');
 template<std::integral T, size_t fill_size = sizeof(T) * 2> requires (!Character<T>)
 std::string format_hex_prefixless(T v);
 
-std::string format_hex_sequence(std::basic_string_view<u8> bytes);
+//std::string format_hex_sequence(std::basic_string_view<u8> bytes);
 
 
 /// Implementations
 
-template <class T>
+template<class T> requires AddableToAs<std::string, T>
 std::string join (const std::vector<T>& strings, std::string_view separator)
 {
 	std::string res;
@@ -66,7 +66,7 @@ std::string format_hex_prefixless (T v)
 template <std::integral T> requires (Character<T>)
 std::string format_hex_prefixless (T v)
 {
-	return format_hex_prefixless<u16, 2>(u16(u8(v)))
+	return format_hex_prefixless<u16, 2>(u16(u8(v)));
 }
 
 template<std::integral T>
@@ -74,4 +74,14 @@ std::string format_hex(T v) {
 	return "0x" + format_hex_prefixless(v);
 }
 
+
+inline std::string format_hex_sequence (std::basic_string_view<u8> bytes)
+{
+	std::vector<std::string> strings(bytes.size());
+	std::transform(bytes.begin(), bytes.end(), strings.begin(), [](u8 character){
+		return format_hex_prefixless(u16(character));
+	});
+
+	return join(strings, " ");
+}
 

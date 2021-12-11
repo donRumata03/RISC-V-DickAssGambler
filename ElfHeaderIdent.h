@@ -6,6 +6,7 @@
 #include "pch.h"
 #include "bit_utils.h"
 #include "string_viewing_utils.h"
+#include "formatting_utils.h"
 
 
 enum class ElfHeaderEndianness : unsigned char
