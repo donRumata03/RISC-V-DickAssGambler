@@ -9,6 +9,8 @@
 #include "SuctionHeaderEntry.h"
 #include "generic_utils/file_utils.h"
 #include "ElfSection.h"
+#include "SymbolTableEntry.h"
+#include "ElfSymbol.h"
 
 class ElfFile
 {
@@ -19,6 +21,11 @@ public:
 	std::vector<SuctionHeaderEntry> section_headers;
 	std::vector<ElfSection> sections;
 
+	std::vector<SymbolTableEntry> symbol_table_entries;
+	std::vector<ElfSymbol> symbols;
+
+	ElfSection text_section;
+
 
 	explicit ElfFile(const fs::path& elf_path) {
 		raw_data = read_bytes(elf_path);
@@ -26,6 +33,10 @@ public:
 
 		read_section_headers();
 		read_sections();
+
+		parse_text();
+		parse_symtab();
+
 	}
 
 	auto get_section_by_name(const std::string& name) -> std::optional<ElfSection> {
@@ -56,6 +67,28 @@ private:
 		for (auto& section : sections) {
 			section.name = std::string(reinterpret_cast<const c8*>(section_name_table.data.data()) + section.header.name_offset);
 		}
+	}
+
+	void parse_text() {
+		auto text_search = get_section_by_name(".text");
+		if (!text_search) {
+			throw std::runtime_error("Your elf must contain .text_section section in order to be disassembled");
+		} else {
+			text_section = *text_search;
+		}
+	}
+
+	void parse_symtab() {
+		auto symtab_search = get_section_by_name(".symtab");
+
+		if (!symtab_search) {
+			throw std::runtime_error("Your elf must contain .symtab section in order to be disassembled");
+		}
+
+		// Firstly — get entries:
+		auto symtab_section = *symtab_search;
+
+
 	}
 };
 
