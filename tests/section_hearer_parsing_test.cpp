@@ -21,6 +21,7 @@ TEST(SuctionHeaderTests, FullSuctionHeader)
 	auto symtab_2 = *elf2.get_section_by_name(".symtab");
 	auto text_2 = *elf2.get_section_by_name(".text");
 
+	EXPECT_FALSE(elf1.get_section_by_name("deep dark fantasies"));
 
 	EXPECT_THROW(ElfFile{x64_elf_path}, std::runtime_error);
 }
