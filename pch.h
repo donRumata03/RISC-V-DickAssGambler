@@ -14,6 +14,7 @@
 #include <cassert>
 #include <type_traits>
 #include <vector>
+#include <sstream>
 
 #include <ranges>
 

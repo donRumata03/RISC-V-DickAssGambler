@@ -39,14 +39,28 @@ project(RISC_V_Disassembler)
 
 include_directories(${CMAKE_CURRENT_LIST_DIR})
 
-
-add_executable(RISC_V_Disassembler
-        main.cpp
-        headers/ElfHeaderIdent.h
+add_library(RISC_V_Disassembler
+        elf_parsing/ElfHeaderIdent.h
         generic_utils/bit_utils.h
         generic_utils/file_utils.h
         generic_utils/string_viewing_utils.h
-        generic_utils/formatting_utils.h headers/ElfHeader.h headers/SuctionHeaderEntry.cpp headers/SuctionHeaderEntry.h headers/ElfHeaderIdent.cpp headers/ElfHeader.cpp)
+        generic_utils/formatting_utils.h
+        elf_parsing/ElfHeader.h
+        elf_parsing/SuctionHeaderEntry.cpp
+        elf_parsing/SuctionHeaderEntry.h
+        elf_parsing/ElfHeaderIdent.cpp
+        elf_parsing/ElfHeader.cpp
+        elf_parsing/section_header_reader.cpp
+        elf_parsing/section_header_reader.h
+        elf_parsing/ElfFile.cpp
+        elf_parsing/ElfFile.h
+)
+
+add_executable(RISC_V_Disassembler_Runner
+        main.cpp
+
+
+        )
 
 target_precompile_headers(RISC_V_Disassembler PRIVATE pch.h)
 

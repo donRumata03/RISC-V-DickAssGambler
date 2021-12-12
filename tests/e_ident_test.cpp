@@ -5,7 +5,7 @@
 #include "gtest/gtest.h"
 #include <cassert>
 #include <generic_utils/file_utils.h>
-#include "headers/ElfHeaderIdent.h"
+#include "elf_parsing/ElfHeaderIdent.h"
 #include "detect_locations.h"
 
 

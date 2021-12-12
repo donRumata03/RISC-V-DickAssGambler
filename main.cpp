@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "generic_utils/bit_utils.h"
-#include "headers/ElfHeader.h"
+#include "elf_parsing/ElfHeader.h"
 
 
 int main()

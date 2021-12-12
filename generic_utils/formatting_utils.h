@@ -55,7 +55,7 @@ void dump_bytes (T v, char term)
 template <std::integral T, size_t fill_size> requires (!Character<T>)
 std::string format_hex_prefixless (T v)
 {
-	auto ss = std::stringstream{};
+	std::stringstream ss;
 
 	ss << std::hex << std::uppercase << std::setfill('0') << std::setw(fill_size) << v;
 
