@@ -45,3 +45,10 @@ template<Character CharTo, std::integral T>
 auto view_as(T& integer) {
 	return view_chars<CharTo>(reinterpret_cast<CharTo*>(&integer), sizeof(T));
 }
+
+template<Character Char>
+auto view_slice(const std::basic_string<Char>& str, usize start, usize count) {
+	std::basic_string_view<Char> res(str);
+	return res.substr(start, count);
+}
+
