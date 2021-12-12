@@ -32,30 +32,7 @@ struct SuctionHeaderEntry
 	u32 entry_size; // Contains the size, in bytes, of each entry, for sections that contain fixed-size entries. Otherwise, this field contains zero.
 
 
-	static SuctionHeaderEntry construct_from_bytes(byte_view bytes) {
-		assert(bytes.size() == sizeof(SuctionHeaderEntry));
-
-		SuctionHeaderEntry res {
-			*reinterpret_cast<const SuctionHeaderEntry*>(bytes.data())
-		};
-
-		if constexpr(is_big_endian()) {
-			reverse_all(
-					res.name_offset,
-					*reinterpret_cast<u32*>(&res.type),
-					res.flags,
-					res.virtual_address,
-					res.file_offset,
-					res.size,
-					res.link,
-					res.info,
-					res.alignment,
-					res.entry_size
-			);
-		}
-
-		return res;
-	}
+	static SuctionHeaderEntry construct_from_bytes(byte_view bytes);
 };
 
 static_assert(sizeof(SuctionHeaderEntry) == 0x28);
