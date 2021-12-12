@@ -36,7 +36,6 @@ public:
 
 		parse_text();
 		parse_symtab();
-
 	}
 
 	auto get_section_by_name(const std::string& name) -> std::optional<ElfSection> {
@@ -72,7 +71,7 @@ private:
 	void parse_text() {
 		auto text_search = get_section_by_name(".text");
 		if (!text_search) {
-			throw std::runtime_error("Your elf must contain .text_section section in order to be disassembled");
+			throw std::runtime_error("Your elf must contain .text section in order to be disassembled");
 		} else {
 			text_section = *text_search;
 		}
@@ -88,6 +87,21 @@ private:
 		// Firstly — get entries:
 		auto symtab_section = *symtab_search;
 
+
+		usize entry_size = symtab_section.header.entry_size;
+		usize file_offset = symtab_section.header.file_offset;
+		usize header_size = symtab_section.header.size;
+		for (
+				usize entry_start = file_offset;
+				entry_start < file_offset + header_size;
+				entry_start += entry_size
+			)
+		{
+			auto this_view = view_slice(raw_data, entry_start, entry_size);
+			symbol_table_entries.push_back(SymbolTableEntry::construct_from_bytes(this_view));
+		}
+
+		// Get symbol names => put them into ElfSymbols together with entries:
 
 	}
 };
