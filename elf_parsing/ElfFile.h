@@ -28,6 +28,12 @@ public:
 		read_sections();
 	}
 
+	auto get_section_by_name(const std::string& name) -> std::optional<ElfSection> {
+		auto lookup_res = std::find_if(sections.begin(), sections.end(), [&name](auto sec){ return sec.name == name; });
+
+		return lookup_res == sections.end() ? std::optional<ElfSection>() : *lookup_res;
+	}
+
 private:
 	void read_section_headers() {
 		for (usize entry_start = header.shoff; entry_start < header.shoff + header.shentsize * header.shnum; entry_start += header.shentsize) {
