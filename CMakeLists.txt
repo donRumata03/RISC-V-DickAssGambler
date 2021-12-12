@@ -46,7 +46,7 @@ add_executable(RISC_V_Disassembler
         generic_utils/bit_utils.h
         generic_utils/file_utils.h
         generic_utils/string_viewing_utils.h
-        generic_utils/formatting_utils.h headers/ElfHeader.h headers/SectionHeaderEntry.cpp headers/SectionHeaderEntry.h)
+        generic_utils/formatting_utils.h headers/ElfHeader.h headers/SuctionHeaderEntry.cpp headers/SuctionHeaderEntry.h headers/ElfHeaderIdent.cpp headers/ElfHeader.cpp)
 
 target_precompile_headers(RISC_V_Disassembler PRIVATE pch.h)
 
