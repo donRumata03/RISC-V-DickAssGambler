@@ -10,7 +10,7 @@
 #include "elf_parsing/ElfFile.h"
 
 
-TEST(SctionHeaderTests, FullSuctionHeader)
+TEST(SuctionHeaderTests, FullSuctionHeader)
 {
 	auto elf1 = ElfFile(test1_elf_path);
 	auto elf2 = ElfFile(test2_elf_path);

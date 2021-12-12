@@ -8,6 +8,7 @@
 #include "ElfHeader.h"
 #include "SuctionHeaderEntry.h"
 #include "generic_utils/file_utils.h"
+#include "ElfSection.h"
 
 class ElfFile
 {
@@ -16,7 +17,7 @@ public:
 
 	ElfHeader header;
 	std::vector<SuctionHeaderEntry> section_headers;
-	std::vector<byte_string> sections;
+	std::vector<ElfSection> sections;
 
 
 	explicit ElfFile(const fs::path& elf_path) {
@@ -24,7 +25,7 @@ public:
 		header = ElfHeader::read_from_bytes(byte_view(raw_data));
 
 		read_section_headers();
-
+		read_sections();
 	}
 
 private:
@@ -37,7 +38,17 @@ private:
 
 	void read_sections() {
 		for (auto& section_header : section_headers) {
-//			sections.push_back()
+			sections.push_back(ElfSection {
+					.header = section_header,
+					.name = "", // We'll get it from one of the sections after parsing them
+					.data = raw_data.substr(section_header.file_offset, section_header.size)
+			});
+		}
+		auto section_name_table = sections[header.shstrndx];
+
+		// Get section names:
+		for (auto& section : sections) {
+			section.name = std::string(reinterpret_cast<const c8*>(section_name_table.data.data()) + section.header.name_offset);
 		}
 	}
 };

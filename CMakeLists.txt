@@ -54,7 +54,7 @@ add_library(RISC_V_Disassembler
         elf_parsing/section_header_reader.h
         elf_parsing/ElfFile.cpp
         elf_parsing/ElfFile.h
-)
+        elf_parsing/ElfSection.cpp elf_parsing/ElfSection.h)
 
 add_executable(RISC_V_Disassembler_Runner
         main.cpp
