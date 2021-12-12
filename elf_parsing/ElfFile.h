@@ -102,7 +102,18 @@ private:
 		}
 
 		// Get symbol names => put them into ElfSymbols together with entries:
+		if (symtab_section.header.link == 0) {
+			throw std::runtime_error("SymTab section header must have link to string table with symbol names");
+		}
+		ElfSection symbol_name_table = sections[symtab_section.header.link];
 
+		for (SymbolTableEntry& symbol_table_entry : symbol_table_entries) {
+			symbols.push_back(ElfSymbol {
+					.entry = symbol_table_entry,
+					.name = std::string(
+							reinterpret_cast<const c8 *>(symbol_name_table.data.data()) + symbol_table_entry.st_name)
+			});
+		}
 	}
 };
 
