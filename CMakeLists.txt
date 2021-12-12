@@ -34,45 +34,17 @@ message("C++ compiler is set to ${CMAKE_CXX_COMPILER}")
 
 set(CMAKE_CXX_STANDARD 20)
 
-project(RISC_V_Disassembler)
+project(RISC_V_Disassembler CXX)
 
 
 include_directories(${CMAKE_CURRENT_LIST_DIR})
 
-add_subdirectory(elf_parsing)
 add_subdirectory(generic_utils)
+add_subdirectory(elf_parsing)
 add_subdirectory(risc_v)
 
-add_library(GenericUtils
-        generic_utils/bit_utils.h
-        generic_utils/file_utils.h
-        generic_utils/string_viewing_utils.h
-        generic_utils/formatting_utils.h
-        )
-target_precompile_headers(GenericUtils PRIVATE pch.h)
 
-add_library(ElfParsing
-        elf_parsing/ElfHeaderIdent.h
-        elf_parsing/ElfHeader.h
-        elf_parsing/SuctionHeaderEntry.cpp
-        elf_parsing/SuctionHeaderEntry.h
-        elf_parsing/ElfHeaderIdent.cpp
-        elf_parsing/ElfHeader.cpp
-        elf_parsing/section_header_reader.cpp
-        elf_parsing/section_header_reader.h
-        elf_parsing/ElfFile.cpp
-        elf_parsing/ElfFile.h
-        elf_parsing/ElfSection.cpp
-        elf_parsing/ElfSection.h
-        elf_parsing/SymbolTableEntry.cpp
-        elf_parsing/SymbolTableEntry.h
-        elf_parsing/ElfSymbol.cpp
-        elf_parsing/ElfSymbol.h
-        )
 
-add_library(RISC_V_Disassembler
-        risc_v/risc_v_disassembler.h
-        )
 
 add_executable(RISC_V_Disassembler_Runner
         main.cpp
