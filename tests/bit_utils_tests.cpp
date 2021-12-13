@@ -56,3 +56,13 @@ TEST(BitUtils, TestAllReversing)
 	EXPECT_EQ(c, u32{0xEFBEADDEu});
 	EXPECT_EQ(d, u64{0xEFCDAB8967452301ull});
 }
+
+
+TEST(BitUtils, TestConstructingFromBitSequence) {
+	u32 bit_sequence = 0b01001100011u;
+
+	auto test = [&](const std::vector<std::pair<usize, usize>>& segments){ return two_s_complement_int_from_range_sequence(bit_sequence, segments); };
+
+	EXPECT_EQ(test({ { 0, 1 }, { 4, 4 }, { 6, 6 }, { 9, 10 } }), 0b011011);
+	EXPECT_EQ(test({ { 0, 1 }, { 6, 6 }, { 9, 9 } }), -1);
+}

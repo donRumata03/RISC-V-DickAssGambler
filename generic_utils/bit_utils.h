@@ -54,4 +54,4 @@ u32 get_trailing_ones(usize amount);
 /**
  * sign bit is considered to be the last one
  */
-i32 two_s_complement_int_from_range_sequence(u32 bits, const std::vector<std::pair<usize, usize>>& index_ranges_inclusive);
+i32 two_s_complement_int_from_range_sequence(u32 bits, std::vector<std::pair<usize, usize>> index_ranges_inclusive);
