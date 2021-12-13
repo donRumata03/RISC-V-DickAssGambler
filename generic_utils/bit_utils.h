@@ -23,31 +23,18 @@ inline void check_platform_parameters() {
 		std::cout << "[INFO]: Your native endianness is little-endian. Brilliant!\n";
 }
 
-/**
- * sign bit is considered to be the last one
- */
-i32 twoSComplementIntFromRangeSequence(u32 bits, const std::vector<std::pair<usize, usize>>& index_ranges_inclusive) {
-	usize res_length = 0;
-	for (auto term : index_ranges_inclusive | rv::transform([](auto v){ return v.second - v.first + 1; })) {
-		res_length += term;
-	}
-
-	i32 res{};
-
-}
-
 
 template <std::unsigned_integral T>
 T reverse_byte_order(T number) {
-	T res{};
+T res{};
 
-	constexpr usize bytes_T = sizeof(T);
+constexpr usize bytes_T = sizeof(T);
 
-	for (size_t i = 0; i < bytes_T; ++i) {
-		res |= ((number >> (i * 8)) & T{0xFFU}) << ((bytes_T - i - 1) * 8);
-	}
+for (size_t i = 0; i < bytes_T; ++i) {
+res |= ((number >> (i * 8)) & T{0xFFU}) << ((bytes_T - i - 1) * 8);
+}
 
-	return res;
+return res;
 }
 
 template <std::unsigned_integral T>
@@ -59,3 +46,12 @@ template<class ...T>
 void reverse_all(T&... args) {
 	(reverse_byte_order_in_place(args), ...);
 }
+
+
+
+u32 get_trailing_ones(usize amount);
+
+/**
+ * sign bit is considered to be the last one
+ */
+i32 two_s_complement_int_from_range_sequence(u32 bits, const std::vector<std::pair<usize, usize>>& index_ranges_inclusive);

@@ -46,3 +46,5 @@ using isize = std::ptrdiff_t;
 
 using byte_view = std::basic_string_view<u8>;
 using byte_string = std::basic_string<u8>;
+
+#define let auto
