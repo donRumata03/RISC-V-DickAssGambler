@@ -16,8 +16,14 @@
 #include <vector>
 #include <sstream>
 #include <optional>
+#include <algorithm>
+#include <variant>
+#include <numeric>
 
 #include <ranges>
+namespace rs = std::ranges;
+namespace rv = rs::view;
+namespace ra = rs::action;
 
 #include <filesystem>
 namespace fs = std::filesystem;

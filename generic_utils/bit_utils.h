@@ -23,7 +23,18 @@ inline void check_platform_parameters() {
 		std::cout << "[INFO]: Your native endianness is little-endian. Brilliant!\n";
 }
 
+/**
+ * sign bit is considered to be the last one
+ */
+i32 twoSComplementIntFromRangeSequence(u32 bits, const std::vector<std::pair<usize, usize>>& index_ranges_inclusive) {
+	usize res_length = 0;
+	for (auto term : index_ranges_inclusive | rv::transform([](auto v){ return v.second - v.first + 1; })) {
+		res_length += term;
+	}
 
+	i32 res{};
+
+}
 
 
 template <std::unsigned_integral T>
