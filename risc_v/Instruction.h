@@ -61,6 +61,8 @@ struct Instruction {
 	std::optional<IntRegister> src_register_right;
 	std::optional<IntRegister> dest_register_right;
 
+	std::optional<CsrRegister> csr_register;
+
 
 //	IntInstructionLayout intLayout;
 };

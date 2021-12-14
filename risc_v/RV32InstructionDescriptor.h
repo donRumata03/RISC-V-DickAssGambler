@@ -15,7 +15,9 @@ enum class RV32InstructionPattern
 	SB,
 	U,
 	UJ,
-	FULL_MATCH_VALIDATION
+	FULL_MATCH_VALIDATION,
+	CSR_COMMAND,
+	ZIMM_CSR_COMMAND,
 };
 
 struct RV32InstructionDescriptor
@@ -77,7 +79,11 @@ inline std::vector<RV32InstructionDescriptor> rv_32_instruction_descriptors {
 		{ "ecall",   RV32InstructionPattern::FULL_MATCH_VALIDATION, 0b1110011, {}, {}, 0b000000000000'00000'000'00000 },
 		{ "ebreak",  RV32InstructionPattern::FULL_MATCH_VALIDATION, 0b1110011, {}, {}, 0b000000000001'00000'000'00000 },
 
-		// TODO: CSR commands
-		// { "",  RV32InstructionPattern::FULL_MATCH_VALIDATION, 0b1110011, {}, {}, 0b000000000001'00000'000'00000 },
+		{ "csrrw",  RV32InstructionPattern::CSR_COMMAND, 0b1110011, 0b001, {} },
+		{ "csrrs",  RV32InstructionPattern::CSR_COMMAND, 0b1110011, 0b010, {} },
+		{ "csrrc",  RV32InstructionPattern::CSR_COMMAND, 0b1110011, 0b011, {} },
+		{ "csrwi",  RV32InstructionPattern::ZIMM_CSR_COMMAND, 0b1110011, 0b101, {} },
+		{ "csrsi",  RV32InstructionPattern::ZIMM_CSR_COMMAND, 0b1110011, 0b110, {} },
+		{ "csrci",  RV32InstructionPattern::ZIMM_CSR_COMMAND, 0b1110011, 0b111, {} },
 };
 
