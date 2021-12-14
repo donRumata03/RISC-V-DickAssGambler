@@ -29,7 +29,7 @@ Immediate parse_immediate (u32 command, const RV32InstructionDescriptor& instruc
 			}, *instruction_descriptor.immediate_signedness);
 
 		case I_SHIFT: return parse_immediate(command, {
-					{}
+					{ 20, 24 }
 			}, *instruction_descriptor.immediate_signedness);
 
 		case S: return parse_immediate(command, {
@@ -60,5 +60,30 @@ Immediate parse_immediate (u32 command, const RV32InstructionDescriptor& instruc
 Instruction parse_RV32_instruction (u32 command)
 {
 	return Instruction{};
+}
+
+u32 parse_funct3 (u32 command)
+{
+	return 0;
+}
+
+u32 parse_funct7 (u32 command)
+{
+	return 0;
+}
+
+u32 parse_rs1 (u32 command)
+{
+	return 0;
+}
+
+u32 parse_rs2 (u32 command)
+{
+	return 0;
+}
+
+u32 parse_rd (u32 command)
+{
+	return 0;
 }
 

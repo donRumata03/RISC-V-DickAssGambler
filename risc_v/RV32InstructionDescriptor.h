@@ -69,9 +69,9 @@ inline std::vector<RV32InstructionDescriptor> rv_32_instruction_descriptors {
 		{ "ori",   RV32InstructionPattern::I, 0b0010011, 0b110, {}, ImmediateSignness::SIGNED },
 		{ "andi",   RV32InstructionPattern::I, 0b0010011, 0b111, {}, ImmediateSignness::SIGNED },
 
-		{ "slli",   RV32InstructionPattern::I_SHIFT, 0b0010011, 0b001, {}, ImmediateSignness::UNSIGNED },
-		{ "srli",   RV32InstructionPattern::I_SHIFT, 0b0010011, 0b101, 0b0000000, ImmediateSignness::UNSIGNED },
-		{ "srai",   RV32InstructionPattern::I_SHIFT, 0b0010011, 0b101, 0b0100000, ImmediateSignness::UNSIGNED },
+		{ "slli",   RV32InstructionPattern::I_SHIFT, 0b0010011, 0b001, {}, ImmediateSignness::ZERO_EXTENDED_UNSIGNED },
+		{ "srli",   RV32InstructionPattern::I_SHIFT, 0b0010011, 0b101, 0b0000000, ImmediateSignness::ZERO_EXTENDED_UNSIGNED },
+		{ "srai",   RV32InstructionPattern::I_SHIFT, 0b0010011, 0b101, 0b0100000, ImmediateSignness::ZERO_EXTENDED_UNSIGNED },
 
 		{ "add",   RV32InstructionPattern::R, 0b0110011, 0b000, 0b0000000 },
 		{ "sub",   RV32InstructionPattern::R, 0b0110011, 0b000, 0b0100000 },
