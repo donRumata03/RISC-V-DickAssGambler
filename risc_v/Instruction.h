@@ -26,7 +26,7 @@ struct Instruction {
 
 	InstructionSet instruction_set;
 
-	IntInstructionLayout intLayout;
+//	IntInstructionLayout intLayout;
 };
 
 
