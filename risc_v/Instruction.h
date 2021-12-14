@@ -12,14 +12,6 @@ enum class InstructionSet {
 	RVC
 };
 
-enum class IntInstructionLayout {
-	R,
-	I,
-	S,
-	SB,
-	U,
-	UJ,
-};
 
 
 struct OpCode {
