@@ -20,50 +20,57 @@ enum class RV32InstructionPattern
 	ZIMM_CSR_COMMAND,
 };
 
+enum class ImmediateSignness
+{
+	SIGNED,
+	UNSIGNED
+};
+
 struct RV32InstructionDescriptor
 {
 	std::string name;
 	RV32InstructionPattern pattern;
 	u32 opcode;
 
-	std::optional<u32> funct3;
-	std::optional<u32> funct7;
-	std::optional<u32> match_after_opcode;
+	std::optional<u32> funct3; // For those who have it
+	std::optional<u32> funct7; // For those who have it
+	std::optional<ImmediateSignness> immediate_signedness; // For those who have immediates (all, excluding: { R, FULL_MATCH_VALIDATION, CSR_COMMAND }).
+	std::optional<u32> match_after_opcode; // For full-matching variant
 };
 
 
 inline std::vector<RV32InstructionDescriptor> rv_32_instruction_descriptors {
-		{ "lui",   RV32InstructionPattern::U, 0b0110111, {}, {} },
-		{ "auipc", RV32InstructionPattern::U, 0b0010111, {}, {} },
-		{ "jal",   RV32InstructionPattern::UJ, 0b1101111, {}, {} }, // TODO: Interface for viewing addresses
-		{ "jalr",  RV32InstructionPattern::I, 0b1100111, 0b000, {} },
+		{ "lui",   RV32InstructionPattern::U, 0b0110111, {}, {}, ImmediateSignness::UNSIGNED },
+		{ "auipc", RV32InstructionPattern::U, 0b0010111, {}, {}, ImmediateSignness::UNSIGNED },
+		{ "jal",   RV32InstructionPattern::UJ, 0b1101111, {}, {}, ImmediateSignness::SIGNED}, // TODO: Interface for viewing addresses
+		{ "jalr",  RV32InstructionPattern::I, 0b1100111, 0b000, {}, ImmediateSignness::SIGNED },
 
-		{ "beq",   RV32InstructionPattern::SB, 0b1100011, 0b000, {} },
-		{ "bne",   RV32InstructionPattern::SB, 0b1100011, 0b001, {} },
-		{ "blt",   RV32InstructionPattern::SB, 0b1100011, 0b100, {} },
-		{ "bge",   RV32InstructionPattern::SB, 0b1100011, 0b101, {} },
-		{ "bltu",  RV32InstructionPattern::SB, 0b1100011, 0b110, {} }, // TODO: how do immediates work in unsigned commands
-		{ "bgeu",  RV32InstructionPattern::SB, 0b1100011, 0b111, {} },
+		{ "beq",   RV32InstructionPattern::SB, 0b1100011, 0b000, {}, ImmediateSignness::SIGNED },
+		{ "bne",   RV32InstructionPattern::SB, 0b1100011, 0b001, {}, ImmediateSignness::SIGNED },
+		{ "blt",   RV32InstructionPattern::SB, 0b1100011, 0b100, {}, ImmediateSignness::SIGNED },
+		{ "bge",   RV32InstructionPattern::SB, 0b1100011, 0b101, {}, ImmediateSignness::SIGNED },
+		{ "bltu",  RV32InstructionPattern::SB, 0b1100011, 0b110, {}, ImmediateSignness::SIGNED }, // TODO: how do immediates work in unsigned commands
+		{ "bgeu",  RV32InstructionPattern::SB, 0b1100011, 0b111, {}, ImmediateSignness::SIGNED },
 
-		{ "lb",    RV32InstructionPattern::I, 0b0000011, 0b000, {} },
-		{ "lh",    RV32InstructionPattern::I, 0b0000011, 0b001, {} },
-		{ "lw",    RV32InstructionPattern::I, 0b0000011, 0b010, {} },
-		{ "lbu",   RV32InstructionPattern::I, 0b0000011, 0b100, {} },
-		{ "lhu",   RV32InstructionPattern::I, 0b0000011, 0b101, {} },
+		{ "lb",    RV32InstructionPattern::I, 0b0000011, 0b000, {}, ImmediateSignness::SIGNED },
+		{ "lh",    RV32InstructionPattern::I, 0b0000011, 0b001, {}, ImmediateSignness::SIGNED },
+		{ "lw",    RV32InstructionPattern::I, 0b0000011, 0b010, {}, ImmediateSignness::SIGNED },
+		{ "lbu",   RV32InstructionPattern::I, 0b0000011, 0b100, {}, ImmediateSignness::UNSIGNED },
+		{ "lhu",   RV32InstructionPattern::I, 0b0000011, 0b101, {}, ImmediateSignness::UNSIGNED },
 
-		{ "sb",   RV32InstructionPattern::S, 0b0100011, 0b000, {} },
-		{ "sh",   RV32InstructionPattern::S, 0b0100011, 0b001, {} },
+		{ "sb",   RV32InstructionPattern::S, 0b0100011, 0b000, {}, ImmediateSignness::SIGNED },
+		{ "sh",   RV32InstructionPattern::S, 0b0100011, 0b001, {}, ImmediateSignness::SIGNED },
 
-		{ "addi",   RV32InstructionPattern::I, 0b0010011, 0b000, {} },
-		{ "slti",   RV32InstructionPattern::I, 0b0010011, 0b010, {} },
-		{ "sltiu",   RV32InstructionPattern::I, 0b0010011, 0b011, {} },
-		{ "xori",   RV32InstructionPattern::I,  0b0010011, 0b100, {} },
-		{ "ori",   RV32InstructionPattern::I, 0b0010011, 0b110, {} },
-		{ "andi",   RV32InstructionPattern::I, 0b0010011, 0b111, {} },
+		{ "addi",   RV32InstructionPattern::I, 0b0010011, 0b000, {}, ImmediateSignness::SIGNED },
+		{ "slti",   RV32InstructionPattern::I, 0b0010011, 0b010, {}, ImmediateSignness::SIGNED },
+		{ "sltiu",   RV32InstructionPattern::I, 0b0010011, 0b011, {}, ImmediateSignness::UNSIGNED },
+		{ "xori",   RV32InstructionPattern::I,  0b0010011, 0b100, {}, ImmediateSignness::SIGNED },
+		{ "ori",   RV32InstructionPattern::I, 0b0010011, 0b110, {}, ImmediateSignness::SIGNED },
+		{ "andi",   RV32InstructionPattern::I, 0b0010011, 0b111, {}, ImmediateSignness::SIGNED },
 
-		{ "slli",   RV32InstructionPattern::I_SHIFT, 0b0010011, 0b001, {} },
-		{ "srli",   RV32InstructionPattern::I_SHIFT, 0b0010011, 0b101, 0b0000000 },
-		{ "srai",   RV32InstructionPattern::I_SHIFT, 0b0010011, 0b101, 0b0100000 },
+		{ "slli",   RV32InstructionPattern::I_SHIFT, 0b0010011, 0b001, {}, ImmediateSignness::UNSIGNED },
+		{ "srli",   RV32InstructionPattern::I_SHIFT, 0b0010011, 0b101, 0b0000000, ImmediateSignness::UNSIGNED },
+		{ "srai",   RV32InstructionPattern::I_SHIFT, 0b0010011, 0b101, 0b0100000, ImmediateSignness::UNSIGNED },
 
 		{ "add",   RV32InstructionPattern::R, 0b0110011, 0b000, 0b0000000 },
 		{ "sub",   RV32InstructionPattern::R, 0b0110011, 0b000, 0b0100000 },
@@ -76,14 +83,14 @@ inline std::vector<RV32InstructionDescriptor> rv_32_instruction_descriptors {
 		{ "sra",   RV32InstructionPattern::R, 0b0110011, 0b110, 0b0000000 },
 		{ "add",   RV32InstructionPattern::R, 0b0110011, 0b111, 0b0000000 },
 
-		{ "ecall",   RV32InstructionPattern::FULL_MATCH_VALIDATION, 0b1110011, {}, {}, 0b000000000000'00000'000'00000 },
-		{ "ebreak",  RV32InstructionPattern::FULL_MATCH_VALIDATION, 0b1110011, {}, {}, 0b000000000001'00000'000'00000 },
+		{ "ecall",   RV32InstructionPattern::FULL_MATCH_VALIDATION, 0b1110011, {}, {}, {}, 0b000000000000'00000'000'00000 },
+		{ "ebreak",  RV32InstructionPattern::FULL_MATCH_VALIDATION, 0b1110011, {}, {}, {}, 0b000000000001'00000'000'00000 },
 
 		{ "csrrw",  RV32InstructionPattern::CSR_COMMAND, 0b1110011, 0b001, {} },
 		{ "csrrs",  RV32InstructionPattern::CSR_COMMAND, 0b1110011, 0b010, {} },
 		{ "csrrc",  RV32InstructionPattern::CSR_COMMAND, 0b1110011, 0b011, {} },
-		{ "csrwi",  RV32InstructionPattern::ZIMM_CSR_COMMAND, 0b1110011, 0b101, {} },
-		{ "csrsi",  RV32InstructionPattern::ZIMM_CSR_COMMAND, 0b1110011, 0b110, {} },
-		{ "csrci",  RV32InstructionPattern::ZIMM_CSR_COMMAND, 0b1110011, 0b111, {} },
+		{ "csrwi",  RV32InstructionPattern::ZIMM_CSR_COMMAND, 0b1110011, 0b101, {}, ImmediateSignness::UNSIGNED },
+		{ "csrsi",  RV32InstructionPattern::ZIMM_CSR_COMMAND, 0b1110011, 0b110, {}, ImmediateSignness::UNSIGNED },
+		{ "csrci",  RV32InstructionPattern::ZIMM_CSR_COMMAND, 0b1110011, 0b111, {}, ImmediateSignness::UNSIGNED },
 };
 
