@@ -23,7 +23,8 @@ enum class RV32InstructionPattern
 enum class ImmediateSignness
 {
 	SIGNED,
-	UNSIGNED
+	UNSIGNED,
+	ZERO_EXTENDED_UNSIGNED,
 };
 
 struct RV32InstructionDescriptor
@@ -89,8 +90,8 @@ inline std::vector<RV32InstructionDescriptor> rv_32_instruction_descriptors {
 		{ "csrrw",  RV32InstructionPattern::CSR_COMMAND, 0b1110011, 0b001, {} },
 		{ "csrrs",  RV32InstructionPattern::CSR_COMMAND, 0b1110011, 0b010, {} },
 		{ "csrrc",  RV32InstructionPattern::CSR_COMMAND, 0b1110011, 0b011, {} },
-		{ "csrwi",  RV32InstructionPattern::ZIMM_CSR_COMMAND, 0b1110011, 0b101, {}, ImmediateSignness::UNSIGNED },
-		{ "csrsi",  RV32InstructionPattern::ZIMM_CSR_COMMAND, 0b1110011, 0b110, {}, ImmediateSignness::UNSIGNED },
-		{ "csrci",  RV32InstructionPattern::ZIMM_CSR_COMMAND, 0b1110011, 0b111, {}, ImmediateSignness::UNSIGNED },
+		{ "csrwi",  RV32InstructionPattern::ZIMM_CSR_COMMAND, 0b1110011, 0b101, {}, ImmediateSignness::ZERO_EXTENDED_UNSIGNED },
+		{ "csrsi",  RV32InstructionPattern::ZIMM_CSR_COMMAND, 0b1110011, 0b110, {}, ImmediateSignness::ZERO_EXTENDED_UNSIGNED },
+		{ "csrci",  RV32InstructionPattern::ZIMM_CSR_COMMAND, 0b1110011, 0b111, {}, ImmediateSignness::ZERO_EXTENDED_UNSIGNED },
 };
 

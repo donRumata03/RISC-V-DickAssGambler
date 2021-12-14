@@ -5,6 +5,7 @@
 #pragma once
 
 #include "pch.h"
+#include "RV32InstructionDescriptor.h"
 
 enum class InstructionSet {
 	RV32,
@@ -51,15 +52,19 @@ enum class CsrRegister : u32
 	instreth = 0xC82,
 };
 
+using Immediate = std::variant<u32, i32>;
+
 struct Instruction {
 	u32 address;
 
 	InstructionSet instruction_set;
-	OpCode opcode;
+	RV32InstructionDescriptor descriptor;
 
 	std::optional<IntRegister> src_register_left;
 	std::optional<IntRegister> src_register_right;
 	std::optional<IntRegister> dest_register_right;
+
+	std::optional<Immediate> immediate;
 
 	std::optional<CsrRegister> csr_register;
 
