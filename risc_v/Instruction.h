@@ -53,6 +53,14 @@ enum class CsrRegister : u32
 };
 
 using Immediate = std::variant<u32, i32>;
+Immediate shifted_left(Immediate immediate, usize amount) {
+	if (std::holds_alternative<u32>(immediate)) {
+		return std::get<u32>(immediate) << amount;
+	}
+
+	return std::get<i32>(immediate) << amount;
+}
+
 
 struct Instruction {
 	u32 address;

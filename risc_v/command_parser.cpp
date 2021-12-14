@@ -35,20 +35,22 @@ Immediate parse_immediate (u32 command, const RV32InstructionDescriptor& instruc
 					{ 7, 11 }, { 25, 31 }
 			}, *instruction_descriptor.immediate_signedness);
 
-		case SB: return parse_immediate(command, {
+		case SB: return shifted_left(parse_immediate(command, {
 					{ 8, 11 }, { 25, 30 }, { 7, 7 }, { 31, 31 }
-			}, *instruction_descriptor.immediate_signedness) << 1;
+			}, *instruction_descriptor.immediate_signedness), 1);
 
-		case U: return parse_immediate(command, {
+		case U: return shifted_left(parse_immediate(command, {
 					{ 12, 31 }
-			}, *instruction_descriptor.immediate_signedness) << 12;
+			}, *instruction_descriptor.immediate_signedness), 12);
 
-		case UJ: return parse_immediate(command, {
+		case UJ: return shifted_left(parse_immediate(command, {
 					{ 21, 30 }, { 20, 20 }, { 12, 19 }, { 31, 31 }
-			}, *instruction_descriptor.immediate_signedness) << 1;
+			}, *instruction_descriptor.immediate_signedness), 1);
 
 		case ZIMM_CSR_COMMAND: return parse_immediate(command, {
 					{ 15, 19 }
 			}, *instruction_descriptor.immediate_signedness);
 	}
+
+	throw std::runtime_error("Can't parse immediates from other command types");
 }
