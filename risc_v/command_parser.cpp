@@ -50,7 +50,9 @@ Immediate parse_immediate (u32 command, const RV32InstructionDescriptor& instruc
 		case ZIMM_CSR_COMMAND: return parse_immediate(command, {
 					{ 15, 19 }
 			}, *instruction_descriptor.immediate_signedness);
+
+		default:
+			throw std::runtime_error("Can't parse immediates from other command types");
 	}
 
-	throw std::runtime_error("Can't parse immediates from other command types");
 }
