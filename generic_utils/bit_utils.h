@@ -49,7 +49,7 @@ void reverse_all(T&... args) {
 
 
 
-u32 get_trailing_ones(usize amount);
+u32 generate_trailing_ones(usize amount);
 
 u32 uint_from_range_sequence(u32 bits, const std::vector<std::pair<usize, usize>>& index_ranges_inclusive);
 

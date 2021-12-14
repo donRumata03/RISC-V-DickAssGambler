@@ -4,7 +4,7 @@
 
 #include "bit_utils.h"
 
-u32 get_trailing_ones(usize amount) {
+u32 generate_trailing_ones(usize amount) {
 	return (1 << amount) - 1;
 }
 
@@ -17,7 +17,7 @@ u32 uint_from_range_sequence (u32 bits, const std::vector<std::pair<usize, usize
 			continue;
 		}
 		usize segment_length = r.second + 1 - r.first;
-		let segment = (bits >> r.first) & get_trailing_ones(segment_length);
+		let segment = (bits >> r.first) & generate_trailing_ones(segment_length);
 
 		res |= segment << res_ptr;
 

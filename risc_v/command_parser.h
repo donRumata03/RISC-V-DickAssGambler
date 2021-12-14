@@ -13,5 +13,8 @@
 Immediate parse_immediate(u32 command, const RV32InstructionDescriptor& instruction_descriptor);
 Immediate parse_immediate(u32 command, const std::vector<std::pair<usize, usize>>& ranges, ImmediateSignness signedness);
 
-std::vector<Instruction> parseInstructions ();
+Instruction parse_RV32_instruction(u32 command);
+Instruction parse_RVC_instruction(u16 command);
+
+std::vector<Instruction> parseInstructions (const byte_string& text_section, usize start_adderss);
 

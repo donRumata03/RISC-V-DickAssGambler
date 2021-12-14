@@ -52,3 +52,8 @@ auto view_slice(const std::basic_string<Char>& str, usize start, usize count) {
 	return res.substr(start, count);
 }
 
+
+template<std::integral Int, Character Char>
+Int view_as_integral(std::basic_string_view<Char> str, usize offset) {
+	return *reinterpret_cast<const Int*>(str.data() + offset);
+}
