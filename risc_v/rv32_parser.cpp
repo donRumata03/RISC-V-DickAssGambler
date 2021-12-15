@@ -2,6 +2,7 @@
 // Created by Vova on 16.12.2021.
 //
 
+#include <generic_utils/formatting_utils.h>
 #include "rv32_parser.h"
 
 
@@ -57,33 +58,111 @@ Immediate parse_immediate (u32 command, const RV32InstructionDescriptor& instruc
 	}
 }
 
+std::optional<Immediate> maybe_parse_immediate (u32 command, const RV32InstructionDescriptor& instruction_descriptor)
+{
+	try {
+		return parse_immediate(command, instruction_descriptor);
+	} catch (std::exception& e) {
+		return {};
+	}
+}
+
 Instruction parse_RV32_instruction (u32 command)
 {
-	return Instruction{};
+	// Determine command: firstly, by opcode, then — by funct3 and funct 7:
+	auto opcode = parse_opcode(command);
+	std::vector<RV32InstructionDescriptor> matching_opcode;
+	std::copy_if(rv_32_instruction_descriptors.begin(), rv_32_instruction_descriptors.end(), matching_opcode.begin(), [&](auto& d){
+		return d.opcode == opcode;
+	});
+
+	if (matching_opcode.empty()) {
+		throw std::runtime_error("Can't find command with opcode: " + format_hex(opcode));
+	}
+
+
+	RV32InstructionDescriptor descriptor;
+	if (matching_opcode.size() == 1) {
+		descriptor = matching_opcode[0];
+	} else {
+		// Try to match by funct3
+		auto funct3 = parse_funct3(command);
+		std::vector<RV32InstructionDescriptor> matching_funct3;
+		std::copy_if(matching_opcode.begin(), matching_opcode.end(), matching_funct3.begin(), [&](RV32InstructionDescriptor& d){
+			if (!d.funct3) {
+				throw std::runtime_error("Ambiguous command");
+			}
+			return *d.funct3 == funct3;
+		});
+
+
+		if (matching_funct3.size() == 1) {
+			descriptor = matching_funct3[0];
+		} else {
+			// Try to match by funct7
+			auto funct7 = parse_funct7(command);
+			std::vector<RV32InstructionDescriptor> matching_funct7;
+			std::copy_if(matching_funct7.begin(), matching_funct7.end(), matching_funct7.begin(), [&](RV32InstructionDescriptor& d){
+				if (!d.funct7) {
+					throw std::runtime_error("Ambiguous command");
+				}
+				return *d.funct7 == funct7;
+			});
+
+			if (matching_funct7.empty()) {
+				throw std::runtime_error("Can't find command");
+			}
+			descriptor = matching_funct7[0];
+		}
+	}
+
+
+	return Instruction{
+		.address = 0,
+		.instruction_set = InstructionSet::RV32,
+		.descriptor = descriptor,
+
+		.src_register_left = has_rs1(descriptor.pattern) ? std::optional{IntRegister(parse_rs1(command))} : std::nullopt,
+		.src_register_right = has_rs2(descriptor.pattern) ? std::optional{IntRegister(parse_rs2(command))} : std::nullopt,
+		.dest_register = has_rd(descriptor.pattern) ? std::optional{ IntRegister(parse_rd(command))} : std::nullopt,
+
+		.immediate = maybe_parse_immediate(command, descriptor),
+		.csr_register = has_csr(descriptor.pattern) ? std::optional{ CsrRegister(parse_csr(command))} : std::nullopt,
+	};
+}
+
+u32 parse_opcode (u32 command)
+{
+	return command & generate_trailing_ones(6);
 }
 
 u32 parse_funct3 (u32 command)
 {
-	return 0;
+	return uint_from_range_sequence(command, {{12, 14}});
 }
 
 u32 parse_funct7 (u32 command)
 {
-	return 0;
+	return uint_from_range_sequence(command, {{25, 31}});
 }
 
 u32 parse_rs1 (u32 command)
 {
-	return 0;
+	return uint_from_range_sequence(command, {{15, 19}});
 }
 
 u32 parse_rs2 (u32 command)
 {
-	return 0;
+	return uint_from_range_sequence(command, {{20, 24}});
 }
 
 u32 parse_rd (u32 command)
 {
-	return 0;
+	return uint_from_range_sequence(command, {{7, 11}});
+}
+
+u32 parse_csr (u32 command)
+{
+	return uint_from_range_sequence(command, {{12, 14}});
 }
 
