@@ -22,3 +22,10 @@ TEST(DisAsm, EcallCommand) {
 
 	EXPECT_EQ(format_instruction(instr), "ecall");
 }
+
+TEST(DisAsm, BImmediate) {
+	// 1111000100001100011 --> beq	a5, zero, 10088
+	let instr = parse_RV32_instruction(0x00078863);
+
+	EXPECT_EQ(format_instruction(instr), "ecall");
+}

@@ -83,8 +83,8 @@ inline std::vector<RV32InstructionDescriptor> rv_32_instruction_descriptors {
 		{ "lb",    RV32InstructionPattern::I, 0b0000011, 0b000, {}, ImmediateSignness::SIGNED },
 		{ "lh",    RV32InstructionPattern::I, 0b0000011, 0b001, {}, ImmediateSignness::SIGNED },
 		{ "lw",    RV32InstructionPattern::I, 0b0000011, 0b010, {}, ImmediateSignness::SIGNED },
-		{ "lbu",   RV32InstructionPattern::I, 0b0000011, 0b100, {}, ImmediateSignness::UNSIGNED },
-		{ "lhu",   RV32InstructionPattern::I, 0b0000011, 0b101, {}, ImmediateSignness::UNSIGNED },
+		{ "lbu",   RV32InstructionPattern::I, 0b0000011, 0b100, {}, ImmediateSignness::SIGNED },
+		{ "lhu",   RV32InstructionPattern::I, 0b0000011, 0b101, {}, ImmediateSignness::SIGNED },
 
 		{ "sb",   RV32InstructionPattern::S, 0b0100011, 0b000, {}, ImmediateSignness::SIGNED },
 		{ "sh",   RV32InstructionPattern::S, 0b0100011, 0b001, {}, ImmediateSignness::SIGNED },
