@@ -116,7 +116,7 @@ Instruction parse_RV32_instruction (u32 command)
 			// Try to match by funct7
 			auto funct7 = parse_funct7(command);
 			std::vector<RV32InstructionDescriptor> matching_funct7;
-			std::copy_if(matching_funct7.begin(), matching_funct7.end(), std::back_inserter(matching_funct7), [&](RV32InstructionDescriptor& d){
+			std::copy_if(matching_funct3.begin(), matching_funct3.end(), std::back_inserter(matching_funct7), [&](RV32InstructionDescriptor& d){
 				if (!d.funct7) {
 					throw std::runtime_error("Ambiguous command");
 				}

@@ -15,3 +15,7 @@
 TEST(DisAsm, Test1Elf) {
 	print_disasm(test1_elf_path);
 }
+
+TEST(DisAsm, SubCommand) {
+	print_disasm(test1_elf_path);
+}
