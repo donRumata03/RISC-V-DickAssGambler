@@ -33,11 +33,21 @@ TEST(DisAsm, EcallCommand) {
 	EXPECT_EQ(format_instruction(instr), "ecall");
 }
 
-TEST(DisAsm, BImmediate) {
-	// 1111000100001100011 --> beq	a5, zero, 10088
-	let instr = parse_RV32_instruction(0x00078863);
 
-	EXPECT_EQ(std::get<i32>(*instr.immediate), 10088);
+TEST(DisAsm, BImmediate) {
+/**
+ * <b>0_000000_00000_01111_000_1000_0</b>1100011 --> beq	a5, zero, 10088
+ *
+ * Immediate: 0|0|000000|1000|0 ->> 16
+ */
+	let instr_forward = parse_RV32_instruction(0x00078863);
+
+	//      fa0688e3          	beq	a3, zero, 103c0 <__call_exitprocs+0x68>
+	// Immediate = -80
+	let instr_backward = parse_RV32_instruction(0xfa0688e3);
+
+	EXPECT_EQ(std::get<i32>(*instr_forward.immediate), 16);
+	EXPECT_EQ(std::get<i32>(*instr_backward.immediate), -80);
 }
 
 TEST(DisAsm, IImmediate) {
@@ -55,9 +65,10 @@ TEST(DisAsm, SImmediate) {
 	//	04f18c23          	sb	a5,88(gp)
 	let sb_88 = parse_RV32_instruction(0x04f18c23);
 
-	// 11964:	fee78fa3          	sb	a4,-1(a5)
-	let sb_minus_1 = parse_RV32_instruction(0x04f18c23);
+	// fee78fa3          	sb	a4,-1(a5)
+	let sb_minus_1 = parse_RV32_instruction(0xfee78fa3);
 
 
 	EXPECT_EQ(std::get<i32>(*sb_88.immediate), 88);
+	EXPECT_EQ(std::get<i32>(*sb_minus_1.immediate), -1);
 }
