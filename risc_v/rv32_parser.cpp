@@ -94,7 +94,11 @@ Instruction parse_RV32_instruction (u32 command)
 			}
 			return *d.funct3 == funct3;
 		});
-
+		if (std::all_of(matching_funct3.begin(), matching_funct3.end(), [](RV32InstructionDescriptor& d){ return d.pattern == RV32InstructionPattern::FULL_MATCH_VALIDATION; })) {
+			return Instruction {
+				.descriptor = *std::find_if(matching_funct3.begin(), matching_funct3.end(), [&](RV32InstructionDescriptor& d){ return d.match_after_opcode = parse_excluding_opcode(command); });
+			};
+		}
 
 		if (matching_funct3.size() == 1) {
 			descriptor = matching_funct3[0];
@@ -134,6 +138,11 @@ Instruction parse_RV32_instruction (u32 command)
 u32 parse_opcode (u32 command)
 {
 	return command & generate_trailing_ones(6);
+}
+
+u32 parse_excluding_opcode (u32 command)
+{
+	return uint_from_range_sequence(command, {{7, 31}});
 }
 
 u32 parse_funct3 (u32 command)

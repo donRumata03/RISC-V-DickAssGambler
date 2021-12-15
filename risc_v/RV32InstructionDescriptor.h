@@ -17,8 +17,35 @@ enum class RV32InstructionPattern
 	UJ,
 	FULL_MATCH_VALIDATION,
 	CSR_COMMAND,
-	ZIMM_CSR_COMMAND,
+	ZIMM_CSR_COMMAND
 };
+
+inline bool has_funct3(RV32InstructionPattern pattern) {
+	return pattern != RV32InstructionPattern::U && pattern != RV32InstructionPattern::UJ;
+}
+
+inline bool has_funct7(RV32InstructionPattern pattern) {
+	return pattern == RV32InstructionPattern::R;
+}
+
+inline bool has_rs1(RV32InstructionPattern pattern) {
+	return pattern != RV32InstructionPattern::U && pattern != RV32InstructionPattern::UJ;
+}
+
+inline bool has_rs2(RV32InstructionPattern pattern) {
+	return pattern == RV32InstructionPattern::R || pattern == RV32InstructionPattern::S || pattern == RV32InstructionPattern::SB;
+}
+
+inline bool has_rd(RV32InstructionPattern pattern) {
+	return pattern != RV32InstructionPattern::S && pattern != RV32InstructionPattern::SB;
+}
+
+
+inline bool has_csr(RV32InstructionPattern pattern) {
+	return pattern == RV32InstructionPattern::CSR_COMMAND && pattern == RV32InstructionPattern::ZIMM_CSR_COMMAND;
+}
+
+
 
 enum class ImmediateSignness
 {

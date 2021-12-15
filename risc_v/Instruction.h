@@ -53,31 +53,24 @@ enum class CsrRegister : u32
 };
 
 using Immediate = std::variant<u32, i32>;
-Immediate shifted_left(Immediate immediate, usize amount) {
-	if (std::holds_alternative<u32>(immediate)) {
-		return std::get<u32>(immediate) << amount;
-	}
-
-	return std::get<i32>(immediate) << amount;
-}
+Immediate shifted_left(Immediate immediate, usize amount);
 
 
 struct Instruction {
-	u32 address;
+	u32 address{};
 
-	InstructionSet instruction_set;
-	RV32InstructionDescriptor descriptor;
+	InstructionSet instruction_set{};
+	RV32InstructionDescriptor descriptor{};
 
-	std::optional<IntRegister> src_register_left;
-	std::optional<IntRegister> src_register_right;
-	std::optional<IntRegister> dest_register_right;
+	std::optional<IntRegister> src_register_left{};
+	std::optional<IntRegister> src_register_right{};
+	std::optional<IntRegister> dest_register{};
 
-	std::optional<Immediate> immediate;
+	std::optional<Immediate> immediate{};
 
-	std::optional<CsrRegister> csr_register;
-
-
-//	IntInstructionLayout intLayout;
+	std::optional<CsrRegister> csr_register{};
 };
+
+
 
 
