@@ -15,15 +15,15 @@
 
 
 TEST(DisAsm, Test1Elf) {
-	print_disasm(test1_elf_path);
+	print_disasm(simplest_elf_path);
 }
 
 TEST(DisAsm, Test2Elf) {
-	print_disasm(test2_elf_path);
+	print_disasm(big_rv32_elf_path);
 }
 
 TEST(DisAsm, Test1NewElf) {
-	print_disasm(test1_new_elf_path);
+	print_disasm(rvc_elf_path);
 }
 
 TEST(DisAsm, EcallCommand) {

@@ -12,8 +12,8 @@
 
 TEST(SuctionHeaderTests, FullSuctionHeader)
 {
-	auto elf1 = ElfFile(test1_elf_path);
-	auto elf2 = ElfFile(test2_elf_path);
+	auto elf1 = ElfFile(simplest_elf_path);
+	auto elf2 = ElfFile(big_rv32_elf_path);
 
 	auto symtab_1 = *elf1.get_section_by_name(".symtab");
 	auto text_1 = *elf1.get_section_by_name(".text");

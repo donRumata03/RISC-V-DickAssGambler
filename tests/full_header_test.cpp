@@ -12,8 +12,8 @@
 
 TEST(HeaderTests, FullHeader)
 {
-	auto header1 = ElfHeader::read_from_bytes(read_bytes(test1_elf_path));
-	auto header2 = ElfHeader::read_from_bytes(read_bytes(test2_elf_path));
+	auto header1 = ElfHeader::read_from_bytes(read_bytes(simplest_elf_path));
+	auto header2 = ElfHeader::read_from_bytes(read_bytes(big_rv32_elf_path));
 
 	EXPECT_THROW(ElfHeader::read_from_bytes(read_bytes(x64_elf_path)), std::runtime_error);
 
