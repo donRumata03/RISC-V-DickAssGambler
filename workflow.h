@@ -27,5 +27,5 @@ inline void disasm_to_file_and_console(const fs::path& elf_path, const fs::path&
 	std::string res = do_disasm(elf_path);
 	std::cout << res << std::endl;
 
-	write_file(elf_path, res);
+	write_file(output_path, res);
 }
