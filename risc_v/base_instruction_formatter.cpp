@@ -95,7 +95,7 @@ std::string format_instructions (const std::vector<Instruction>& instructions)
 			format_instruction(instruction) :
 			std::string("unknown-command");
 
-		return format_hex_prefixless(instruction.address) + " " + formatted_instruction;
+		return string_format("%08x %10s %s", instruction.address, "", formatted_instruction.c_str());
 	});
 
 	return join(formatted, "\n");

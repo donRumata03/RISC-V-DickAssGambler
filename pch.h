@@ -22,6 +22,8 @@
 #include <cstddef>
 #include <iterator>
 
+#include <format>
+
 #include <coroutine>
 
 //#include <ranges>

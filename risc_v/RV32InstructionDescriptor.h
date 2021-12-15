@@ -70,14 +70,14 @@ struct RV32InstructionDescriptor
 inline std::vector<RV32InstructionDescriptor> rv_32_instruction_descriptors {
 		{ "lui",   RV32InstructionPattern::U, 0b0110111, {}, {}, ImmediateSignness::UNSIGNED },
 		{ "auipc", RV32InstructionPattern::U, 0b0010111, {}, {}, ImmediateSignness::UNSIGNED },
-		{ "jal",   RV32InstructionPattern::UJ, 0b1101111, {}, {}, ImmediateSignness::SIGNED}, // TODO: Interface for viewing addresses
+		{ "jal",   RV32InstructionPattern::UJ, 0b1101111, {}, {}, ImmediateSignness::SIGNED},
 		{ "jalr",  RV32InstructionPattern::I, 0b1100111, 0b000, {}, ImmediateSignness::SIGNED },
 
 		{ "beq",   RV32InstructionPattern::SB, 0b1100011, 0b000, {}, ImmediateSignness::SIGNED },
 		{ "bne",   RV32InstructionPattern::SB, 0b1100011, 0b001, {}, ImmediateSignness::SIGNED },
 		{ "blt",   RV32InstructionPattern::SB, 0b1100011, 0b100, {}, ImmediateSignness::SIGNED },
 		{ "bge",   RV32InstructionPattern::SB, 0b1100011, 0b101, {}, ImmediateSignness::SIGNED },
-		{ "bltu",  RV32InstructionPattern::SB, 0b1100011, 0b110, {}, ImmediateSignness::SIGNED }, // TODO: how do immediates work in unsigned commands
+		{ "bltu",  RV32InstructionPattern::SB, 0b1100011, 0b110, {}, ImmediateSignness::SIGNED },
 		{ "bgeu",  RV32InstructionPattern::SB, 0b1100011, 0b111, {}, ImmediateSignness::SIGNED },
 
 		{ "lb",    RV32InstructionPattern::I, 0b0000011, 0b000, {}, ImmediateSignness::SIGNED },
