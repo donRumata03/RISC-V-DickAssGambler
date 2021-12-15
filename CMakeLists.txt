@@ -46,7 +46,7 @@ add_subdirectory(risc_v)
 
 add_executable(RISC_V_Disassembler_Runner
         main.cpp
-        )
+        workflow.h)
 
 target_link_libraries(RISC_V_Disassembler_Runner
         GenericUtils

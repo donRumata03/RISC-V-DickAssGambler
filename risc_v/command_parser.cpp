@@ -20,6 +20,7 @@ std::vector<Instruction> parseInstructions (const byte_string& text_section, usi
 					res.emplace_back(parse_RV32_instruction(view_as_integral<u32>(byte_view { text_section }, section_ptr)));
 					res.back().address = section_ptr + start_address;
 				} catch(std::exception& e) {
+					std::cout << "Exception occurred: " << e.what() << std::endl;
 					res.push_back({.address = static_cast<u32>(section_ptr + start_address)});
 				}
 				section_ptr += 4;
@@ -29,6 +30,7 @@ std::vector<Instruction> parseInstructions (const byte_string& text_section, usi
 				try {
 					res.emplace_back(parse_RVC_instruction(view_as_integral<u16>(byte_view { text_section }, section_ptr)));
 					res.back().address = section_ptr + start_address;
+					std::cout << "16-bit RVC command!" << std::endl;
 				} catch(std::exception& e) {
 					res.push_back({.address = static_cast<u32>(section_ptr + start_address)});
 				}

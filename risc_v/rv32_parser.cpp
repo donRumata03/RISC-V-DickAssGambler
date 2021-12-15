@@ -17,6 +17,9 @@ Immediate parse_immediate (u32 command, const std::vector<std::pair<usize, usize
 
 		case ImmediateSignness::ZERO_EXTENDED_UNSIGNED:
 			return uint_from_range_sequence(command, ranges);
+
+		default:
+			throw std::runtime_error("Invalid ImmediateSignness");
 	}
 }
 
