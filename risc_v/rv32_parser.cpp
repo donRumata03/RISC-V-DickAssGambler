@@ -72,7 +72,7 @@ Instruction parse_RV32_instruction (u32 command)
 	// Determine command: firstly, by opcode, then — by funct3 and funct 7:
 	auto opcode = parse_opcode(command);
 	std::vector<RV32InstructionDescriptor> matching_opcode;
-	std::copy_if(rv_32_instruction_descriptors.begin(), rv_32_instruction_descriptors.end(), matching_opcode.begin(), [&](auto& d){
+	std::copy_if(rv_32_instruction_descriptors.begin(), rv_32_instruction_descriptors.end(), std::back_inserter(matching_opcode), [&](auto& d){
 		return d.opcode == opcode;
 	});
 
@@ -88,15 +88,22 @@ Instruction parse_RV32_instruction (u32 command)
 		// Try to match by funct3
 		auto funct3 = parse_funct3(command);
 		std::vector<RV32InstructionDescriptor> matching_funct3;
-		std::copy_if(matching_opcode.begin(), matching_opcode.end(), matching_funct3.begin(), [&](RV32InstructionDescriptor& d){
+		std::copy_if(matching_opcode.begin(), matching_opcode.end(), std::back_inserter(matching_funct3), [&](RV32InstructionDescriptor& d){
 			if (!d.funct3) {
 				throw std::runtime_error("Ambiguous command");
 			}
 			return *d.funct3 == funct3;
 		});
-		if (std::all_of(matching_funct3.begin(), matching_funct3.end(), [](RV32InstructionDescriptor& d){ return d.pattern == RV32InstructionPattern::FULL_MATCH_VALIDATION; })) {
+
+		if (matching_funct3.empty()) {
+			throw std::runtime_error("Can't match funct3");
+		}
+
+		if (std::all_of(matching_funct3.begin(), matching_funct3.end(), [](RV32InstructionDescriptor& d){
+			return d.pattern == RV32InstructionPattern::FULL_MATCH_VALIDATION;
+		})) {
 			return Instruction {
-				.descriptor = *std::find_if(matching_funct3.begin(), matching_funct3.end(), [&](RV32InstructionDescriptor& d){ return d.match_after_opcode = parse_excluding_opcode(command); });
+				.descriptor = *std::find_if(matching_funct3.begin(), matching_funct3.end(), [&](RV32InstructionDescriptor& d){ return d.match_after_opcode = parse_excluding_opcode(command); })
 			};
 		}
 
@@ -106,7 +113,7 @@ Instruction parse_RV32_instruction (u32 command)
 			// Try to match by funct7
 			auto funct7 = parse_funct7(command);
 			std::vector<RV32InstructionDescriptor> matching_funct7;
-			std::copy_if(matching_funct7.begin(), matching_funct7.end(), matching_funct7.begin(), [&](RV32InstructionDescriptor& d){
+			std::copy_if(matching_funct7.begin(), matching_funct7.end(), std::back_inserter(matching_funct7), [&](RV32InstructionDescriptor& d){
 				if (!d.funct7) {
 					throw std::runtime_error("Ambiguous command");
 				}
@@ -114,7 +121,7 @@ Instruction parse_RV32_instruction (u32 command)
 			});
 
 			if (matching_funct7.empty()) {
-				throw std::runtime_error("Can't find command");
+				throw std::runtime_error("Can't match funct7");
 			}
 			descriptor = matching_funct7[0];
 		}

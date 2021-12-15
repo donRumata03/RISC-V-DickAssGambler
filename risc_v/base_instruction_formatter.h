@@ -14,4 +14,4 @@ std::string format_immediate(Immediate immediate);
 
 std::string format_instruction(const Instruction& instruction);
 
-std::string format_instructions(const std::vector<std::optional<Instruction>>& instructions);
+std::string format_instructions(const std::vector<Instruction>& instructions);

@@ -18,18 +18,19 @@ std::vector<Instruction> parseInstructions (const byte_string& text_section, usi
 			case 0b11: {
 				try {
 					res.emplace_back(parse_RV32_instruction(view_as_integral<u32>(byte_view { text_section }, section_ptr)));
-					(*res.back()).address = section_ptr + start_address;
+					res.back().address = section_ptr + start_address;
 				} catch(std::exception& e) {
-					res.emplace_back();
+					res.push_back({.address = static_cast<u32>(section_ptr + start_address)});
 				}
 				section_ptr += 4;
+				break;
 			}
 			default:
 				try {
 					res.emplace_back(parse_RVC_instruction(view_as_integral<u16>(byte_view { text_section }, section_ptr)));
-					(*res.back()).address = section_ptr + start_address;
+					res.back().address = section_ptr + start_address;
 				} catch(std::exception& e) {
-					res.emplace_back();
+					res.push_back({.address = static_cast<u32>(section_ptr + start_address)});
 				}
 
 				section_ptr += 2;
