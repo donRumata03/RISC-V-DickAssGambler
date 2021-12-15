@@ -2,6 +2,7 @@
 // Created by Vova on 16.12.2021.
 //
 
+#include <generic_utils/formatting_utils.h>
 #include "base_instruction_formatter.h"
 
 #define just_case(name) case name: return #name;
@@ -50,3 +51,38 @@ std::string get_csr_register_name (CsrRegister int_register)
 }
 
 #undef just_case
+
+std::string format_immediate (Immediate immediate)
+{
+	if (std::holds_alternative<u32>(immediate)) {
+		return std::to_string(std::get<u32>(immediate));
+	}
+
+	return std::to_string(std::get<i32>(immediate));
+}
+
+std::string format_instruction (const Instruction& instruction)
+{
+	std::vector<std::string> formatted_arguments;
+
+	if (instruction.dest_register) {
+		formatted_arguments.push_back(get_int_register_name(*instruction.dest_register));
+	}
+	if (instruction.src_register_left) {
+		formatted_arguments.push_back(get_int_register_name(*instruction.src_register_left));
+	}
+	if (instruction.src_register_right) {
+		formatted_arguments.push_back(get_int_register_name(*instruction.src_register_right));
+	}
+	if (instruction.immediate) {
+		formatted_arguments.push_back(format_immediate(*instruction.immediate));
+	}
+	if (instruction.csr_register) {
+		formatted_arguments.push_back(get_csr_register_name(*instruction.csr_register));
+	}
+
+	return instruction.descriptor.name + (formatted_arguments.empty() ?
+		"" :
+		join(formatted_arguments)
+	);
+}

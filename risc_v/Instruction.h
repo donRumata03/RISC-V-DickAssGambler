@@ -13,11 +13,6 @@ enum class InstructionSet {
 };
 
 
-
-struct OpCode {
-	u32 value;
-};
-
 enum class IntRegister : u32
 {
 	// € [0, 32)
