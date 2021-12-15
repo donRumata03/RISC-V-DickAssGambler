@@ -55,7 +55,7 @@ struct Instruction {
 	u32 address{};
 
 	InstructionSet instruction_set{};
-	RV32InstructionDescriptor descriptor{};
+	std::optional<RV32InstructionDescriptor> descriptor{};
 
 	std::optional<IntRegister> src_register_left{};
 	std::optional<IntRegister> src_register_right{};

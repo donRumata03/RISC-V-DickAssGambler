@@ -81,8 +81,22 @@ std::string format_instruction (const Instruction& instruction)
 		formatted_arguments.push_back(get_csr_register_name(*instruction.csr_register));
 	}
 
-	return instruction.descriptor.name + (formatted_arguments.empty() ?
+	return instruction.descriptor->name + (formatted_arguments.empty() ?
 		"" :
 		join(formatted_arguments)
 	);
+}
+
+std::string format_instructions (const std::vector<Instruction>& instructions)
+{
+	std::vector<std::string> formatted;
+	std::transform(instructions.begin(), instructions.end(), formatted.begin(), [](const Instruction& instruction){
+		std::string formatted_instruction = bool(instruction.descriptor) ?
+			format_instruction(instruction) :
+			std::string("unknown-command");
+
+		return format_hex_prefixless(instruction.address) + formatted_instruction;
+	});
+
+	return join(formatted, "\n");
 }

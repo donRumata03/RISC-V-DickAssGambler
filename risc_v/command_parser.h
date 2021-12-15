@@ -9,5 +9,5 @@
 #include "Instruction.h"
 
 
-std::vector<Instruction> parseInstructions (const byte_string& text_section, usize start_adderss);
+std::vector<Instruction> parseInstructions (const byte_string& text_section, usize start_address);
 
