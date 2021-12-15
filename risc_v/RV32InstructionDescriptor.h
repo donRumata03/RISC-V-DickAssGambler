@@ -121,5 +121,16 @@ inline std::vector<RV32InstructionDescriptor> rv_32_instruction_descriptors {
 		{ "csrwi",  RV32InstructionPattern::ZIMM_CSR_COMMAND, 0b1110011, 0b101, {}, ImmediateSignness::ZERO_EXTENDED_UNSIGNED },
 		{ "csrsi",  RV32InstructionPattern::ZIMM_CSR_COMMAND, 0b1110011, 0b110, {}, ImmediateSignness::ZERO_EXTENDED_UNSIGNED },
 		{ "csrci",  RV32InstructionPattern::ZIMM_CSR_COMMAND, 0b1110011, 0b111, {}, ImmediateSignness::ZERO_EXTENDED_UNSIGNED },
+
+
+		{ "mul",   RV32InstructionPattern::R, 0b0110011, 0b000, 0b0000001 },
+		{ "mulh",   RV32InstructionPattern::R, 0b0110011, 0b001, 0b0000001 },
+		{ "mulhsu",   RV32InstructionPattern::R, 0b0110011, 0b010, 0b0000001 },
+		{ "mulhu",   RV32InstructionPattern::R, 0b0110011, 0b011, 0b0000001 },
+
+		{ "div",   RV32InstructionPattern::R, 0b0110011, 0b100, 0b0000001 },
+		{ "divu",   RV32InstructionPattern::R, 0b0110011, 0b101, 0b0000001 },
+		{ "rem",   RV32InstructionPattern::R, 0b0110011, 0b110, 0b0000001 },
+		{ "remu",   RV32InstructionPattern::R, 0b0110011, 0b111, 0b0000001 },
 };
 
