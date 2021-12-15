@@ -10,6 +10,7 @@
 #include <cassert>
 #include <generic_utils/formatting_utils.h>
 #include "generic_utils/bit_utils.h"
+#include "risc_v/Instruction.h"
 
 TEST(BitUtils, TestReversing)
 {
@@ -65,4 +66,9 @@ TEST(BitUtils, TestConstructingFromBitSequence) {
 
 	EXPECT_EQ(test({ { 0, 1 }, { 4, 4 }, { 6, 6 }, { 9, 10 } }), 0b011011);
 	EXPECT_EQ(test({ { 0, 1 }, { 6, 6 }, { 9, 9 } }), -1);
+}
+
+TEST(BitUtils, ShiftingVariant) {
+	EXPECT_EQ(std::get<u32>(shifted_left({16u}, 12)), 10088u);
+	EXPECT_EQ(std::get<i32>(shifted_left({1}, 12)), 2);
 }

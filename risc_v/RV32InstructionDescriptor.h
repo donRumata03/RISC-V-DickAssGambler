@@ -68,8 +68,8 @@ struct RV32InstructionDescriptor
 
 
 inline std::vector<RV32InstructionDescriptor> rv_32_instruction_descriptors {
-		{ "lui",   RV32InstructionPattern::U, 0b0110111, {}, {}, ImmediateSignness::UNSIGNED },
-		{ "auipc", RV32InstructionPattern::U, 0b0010111, {}, {}, ImmediateSignness::UNSIGNED },
+		{ "lui",   RV32InstructionPattern::U, 0b0110111, {}, {}, ImmediateSignness::SIGNED },
+		{ "auipc", RV32InstructionPattern::U, 0b0010111, {}, {}, ImmediateSignness::SIGNED },
 		{ "jal",   RV32InstructionPattern::UJ, 0b1101111, {}, {}, ImmediateSignness::SIGNED},
 		{ "jalr",  RV32InstructionPattern::I, 0b1100111, 0b000, {}, ImmediateSignness::SIGNED },
 
