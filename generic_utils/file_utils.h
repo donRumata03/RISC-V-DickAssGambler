@@ -25,3 +25,8 @@ inline byte_string read_bytes(const fs::path& filename) {
 	return res;
 }
 
+inline void write_file(const fs::path& filename, const std::string& data) {
+	std::ofstream out_file(filename);
+	out_file << data;
+	out_file.close();
+}

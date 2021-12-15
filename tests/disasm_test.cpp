@@ -14,16 +14,17 @@
 #include "risc_v/InstructionArgument.h"
 
 
-TEST(DisAsm, Test1Elf) {
-	print_disasm(simplest_elf_path);
+
+TEST(DisAsm, SimplestElf) {
+	disasm_to_file_and_console(simplest_elf_path, simplest_testee_path);
 }
 
-TEST(DisAsm, Test2Elf) {
-	print_disasm(big_rv32_elf_path);
+TEST(DisAsm, BigRV32Elf) {
+	disasm_to_file_and_console(big_rv32_elf_path, big_rv32_testee_path);
 }
 
-TEST(DisAsm, Test1NewElf) {
-	print_disasm(rvc_elf_path);
+TEST(DisAsm, RVCElf) {
+	disasm_to_file_and_console(rvc_elf_path, rvc_testee_path);
 }
 
 TEST(DisAsm, EcallCommand) {
