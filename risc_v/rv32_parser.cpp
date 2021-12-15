@@ -144,7 +144,7 @@ Instruction parse_RV32_instruction (u32 command)
 
 u32 parse_opcode (u32 command)
 {
-	return command & generate_trailing_ones(6);
+	return command & generate_trailing_ones(7);
 }
 
 u32 parse_excluding_opcode (u32 command)
