@@ -88,6 +88,7 @@ inline std::vector<RV32InstructionDescriptor> rv_32_instruction_descriptors {
 
 		{ "sb",   RV32InstructionPattern::S, 0b0100011, 0b000, {}, ImmediateSignness::SIGNED },
 		{ "sh",   RV32InstructionPattern::S, 0b0100011, 0b001, {}, ImmediateSignness::SIGNED },
+		{ "sw",   RV32InstructionPattern::S, 0b0100011, 0b010, {}, ImmediateSignness::SIGNED },
 
 		{ "addi",   RV32InstructionPattern::I, 0b0010011, 0b000, {}, ImmediateSignness::SIGNED },
 		{ "slti",   RV32InstructionPattern::I, 0b0010011, 0b010, {}, ImmediateSignness::SIGNED },
