@@ -20,6 +20,7 @@ int main(int argv, char** argc)
 {
 	if (argv != 2) {
 		std::cout << "Usage: \n\t<binary-name> <path>" << std::endl;
+		return -1;
 	}
 
 	check_platform_parameters();
