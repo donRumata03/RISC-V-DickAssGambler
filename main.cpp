@@ -16,11 +16,15 @@ void print_disasm(const fs::path& filename) {
 	std::cout << format_instructions(parseInstructions(text_section.data, text_section.header.virtual_address)) << std::endl;
 }
 
-int main()
+int main(int argv, char** argc)
 {
+	if (argv != 2) {
+		std::cout << "Usage: \n\t<binary-name> <path>" << std::endl;
+	}
+
 	check_platform_parameters();
 
-	print_disasm(test1_elf_path);
+	print_disasm({argc[1]});
 
 //	test_reversing();
 
