@@ -72,7 +72,7 @@ std::optional<Immediate> maybe_parse_immediate (u32 command, const RV32Instructi
 
 Instruction parse_RV32_instruction (u32 command)
 {
-	// Determine command: firstly, by opcode, then — by funct3 and funct 7:
+	// Determine command: firstly, by opcode:
 	auto opcode = parse_opcode(command);
 	std::vector<RV32InstructionDescriptor> matching_opcode;
 	std::copy_if(rv_32_instruction_descriptors.begin(), rv_32_instruction_descriptors.end(), std::back_inserter(matching_opcode), [&](auto& d){
@@ -83,7 +83,23 @@ Instruction parse_RV32_instruction (u32 command)
 		throw std::runtime_error("Can't find command with opcode: " + format_hex(opcode));
 	}
 
+	// Try to match full pattern:
+	// If fully matches with FULL_MATCH_VALIDATION
+	std::vector<RV32InstructionDescriptor> matching_full_pattern;
+	std::copy_if(matching_opcode.begin(), matching_opcode.end(), std::back_inserter(matching_full_pattern), [&](RV32InstructionDescriptor& d){
+		return d.pattern == RV32InstructionPattern::FULL_MATCH_VALIDATION
+		       && d.match_after_opcode == parse_excluding_opcode(command);
+	});
 
+	if (!matching_full_pattern.empty()) {
+		assert(matching_full_pattern.size() == 1);
+		return Instruction {
+				.descriptor = matching_full_pattern[0]
+		};
+	}
+
+
+	// If can't match full pattern:
 	RV32InstructionDescriptor descriptor;
 	if (matching_opcode.size() == 1) {
 		descriptor = matching_opcode[0];
@@ -100,14 +116,6 @@ Instruction parse_RV32_instruction (u32 command)
 
 		if (matching_funct3.empty()) {
 			throw std::runtime_error("Can't match funct3");
-		}
-
-		if (std::all_of(matching_funct3.begin(), matching_funct3.end(), [](RV32InstructionDescriptor& d){
-			return d.pattern == RV32InstructionPattern::FULL_MATCH_VALIDATION;
-		})) {
-			return Instruction {
-				.descriptor = *std::find_if(matching_funct3.begin(), matching_funct3.end(), [&](RV32InstructionDescriptor& d){ return d.match_after_opcode = parse_excluding_opcode(command); })
-			};
 		}
 
 		if (matching_funct3.size() == 1) {

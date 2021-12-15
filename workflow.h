@@ -6,7 +6,6 @@
 
 #include "risc_v/command_parser.h"
 #include "risc_v/base_instruction_formatter.h"
-#include "detect_locations.h"
 #include "elf_parsing/ElfFile.h"
 
 
