@@ -22,6 +22,10 @@ TEST(DisAsm, Test2Elf) {
 	print_disasm(test2_elf_path);
 }
 
+TEST(DisAsm, Test1NewElf) {
+	print_disasm(test1_new_elf_path);
+}
+
 TEST(DisAsm, EcallCommand) {
 	let instr = parse_RV32_instruction(0x00000073);
 
@@ -44,4 +48,15 @@ TEST(DisAsm, IImmediate) {
 
 	EXPECT_EQ(std::get<i32>(*instr_pos.immediate), 1276);
 	EXPECT_EQ(std::get<i32>(*instr_neg.immediate), -516);
+}
+
+TEST(DisAsm, SImmediate) {
+	//	04f18c23          	sb	a5,88(gp)
+	let sb_88 = parse_RV32_instruction(0x04f18c23);
+
+	// 11964:	fee78fa3          	sb	a4,-1(a5)
+	let sb_minus_1 = parse_RV32_instruction(0x04f18c23);
+
+
+	EXPECT_EQ(std::get<i32>(*sb_88.immediate), 88);
 }
