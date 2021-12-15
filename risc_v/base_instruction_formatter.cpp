@@ -28,6 +28,8 @@ std::string get_int_register_name (IntRegister int_register)
 			return "s" + std::to_string(u32(int_register) + 2 - u32(s2));
 		case t3: case t4: case t5: case t6:
 			return "t" + std::to_string(u32(int_register) + 3 - u32(t3));
+		default:
+			throw std::runtime_error("Unknown register");
 	}
 }
 
