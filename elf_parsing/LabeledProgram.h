@@ -13,20 +13,23 @@ class LabeledProgram
 {
 	ElfFile file;
 	std::vector<Instruction> instruction_sequence;
-	std::unordered_set<u32> non_labeled_jump_targets;
+	std::unordered_set<u32, u32> line_of_code_by_non_labeled_jump_target;
 
 	explicit LabeledProgram(ElfFile raw_file)
 		: file(std::move(raw_file))
 	{
 		instruction_sequence = parseInstructions(file.text_section.data, file.text_section.header.virtual_address);
 
+		usize line_of_code = 0;
 		for (const auto& instruction: instruction_sequence) {
 			if (instruction.maybe_get_address()) {
 				auto jmp_address = *instruction.maybe_get_address();
 				if (file.get_symbol_by_address(jmp_address)) {
-					non_labeled_jump_targets.insert(jmp_address);
+					line_of_code_by_non_labeled_jump_target[jmp_address] = line_of_code;
 				}
 			}
+
+			line_of_code++;
 		}
 	}
 
