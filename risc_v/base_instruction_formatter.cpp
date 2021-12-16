@@ -178,6 +178,13 @@ std::string render_program (
 std::string format_instructions (const ElfFile& file, const std::vector<Instruction>& instruction_sequence)
 {
 	/// First, compute non-labeled targets:
+
+	std::unordered_map<u32, u32> instruction_index_by_address;
+	for (usize line_of_code = 0; line_of_code < instruction_sequence.size(); ++line_of_code) {
+		auto instruction = instruction_sequence[line_of_code];
+		instruction_index_by_address[instruction.address] = line_of_code;
+	}
+
 	std::unordered_map<u32, u32> line_of_code_by_non_labeled_jump_target;
 
 	for (usize line_of_code = 0; line_of_code < instruction_sequence.size(); ++line_of_code) {
@@ -186,10 +193,10 @@ std::string format_instructions (const ElfFile& file, const std::vector<Instruct
 		if (instruction.maybe_get_jmp_address()) {
 			auto jmp_address = *instruction.maybe_get_jmp_address();
 			if (!file.get_symbol_by_address(jmp_address)) {
-				line_of_code_by_non_labeled_jump_target[jmp_address] = line_of_code;
+				line_of_code_by_non_labeled_jump_target[jmp_address] =
+						instruction_index_by_address[jmp_address];
 			}
 		}
-
 	}
 
 	return render_program(file, instruction_sequence, line_of_code_by_non_labeled_jump_target);
