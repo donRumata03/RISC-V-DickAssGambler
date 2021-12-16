@@ -52,7 +52,7 @@ Immediate shifted_left(Immediate immediate, usize amount);
 
 
 struct Instruction {
-	u32 address{};
+	u32 address = 0;
 
 	InstructionSet instruction_set{};
 	std::optional<RV32InstructionDescriptor> descriptor{};
@@ -65,8 +65,11 @@ struct Instruction {
 
 	std::optional<CsrRegister> csr_register{};
 
-	std::optional<u32> maybe_get_jmp_address() const
+	[[nodiscard]] std::optional<u32> maybe_get_jmp_address() const
 	{
+		if (!descriptor.has_value()) {
+			return {};
+		}
 		return descriptor->contains_static_address_offset ?
 			std::optional(address + std::get<i32>(*immediate)) :
 			std::nullopt;

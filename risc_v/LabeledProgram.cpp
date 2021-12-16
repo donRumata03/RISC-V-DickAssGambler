@@ -4,29 +4,29 @@
 
 #include "LabeledProgram.h"
 
-LabeledProgram::LabeledProgram (ElfFile raw_file)
-		: file(std::move(raw_file))
+LabeledProgram::LabeledProgram (const fs::path& elf_path)
 {
-	instruction_sequence = parseInstructions(file.text_section.data, file.text_section.header.virtual_address);
+	file = ElfFile(elf_path);
 
-	usize line_of_code = 0;
-	for (const auto& instruction: instruction_sequence) {
+	instruction_sequence = parseInstructions(file->text_section.data, file->text_section.header.virtual_address);
+
+	for (usize line_of_code = 0; line_of_code < instruction_sequence.size(); ++line_of_code) {
+		auto instruction = instruction_sequence[line_of_code];
 		if (instruction.maybe_get_jmp_address()) {
 			auto jmp_address = *instruction.maybe_get_jmp_address();
-			if (file.get_symbol_by_address(jmp_address)) {
+			if (file->get_symbol_by_address(jmp_address)) {
 				line_of_code_by_non_labeled_jump_target[jmp_address] = line_of_code;
 			}
 		}
 
-		line_of_code++;
 	}
 }
 
 std::optional<std::string> LabeledProgram::get_label_for_address (u32 address)
 {
 	std::string symbol_name;
-	if (file.get_symbol_by_address(address)) {
-		return (*file.get_symbol_by_address(address)).name;
+	if (file->get_symbol_by_address(address)) {
+		return (*file->get_symbol_by_address(address)).name;
 	}
 
 	auto loc_label_try = line_of_code_by_non_labeled_jump_target.find(address);

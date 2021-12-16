@@ -21,19 +21,17 @@ inline std::string do_primitive_disasm(const fs::path& filename) {
 }
 
 inline std::string do_labeled_disasm(const fs::path& filename) {
-	auto elf = ElfFile(filename);
-
-	auto program = LabeledProgram(elf);
+	auto program = LabeledProgram(filename);
 
 	return program.render_program();
 }
 
 inline void print_disasm(const fs::path& filename) {
-	std::cout << do_primitive_disasm(filename) << std::endl;
+	std::cout << do_labeled_disasm(filename) << std::endl;
 }
 
 inline void disasm_to_file_and_console(const fs::path& elf_path, const fs::path& output_path) {
-	std::string res = do_primitive_disasm(elf_path);
+	std::string res = do_labeled_disasm(elf_path);
 	std::cout << res << std::endl;
 
 	write_file(output_path, res);

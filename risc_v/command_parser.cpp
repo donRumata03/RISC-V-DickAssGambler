@@ -17,7 +17,8 @@ std::vector<Instruction> parseInstructions (const byte_string& text_section, usi
 		switch (text_section[section_ptr] & 0b11) {
 			case 0b11: {
 				try {
-					res.emplace_back(parse_RV32_instruction(view_as_integral<u32>(byte_view { text_section }, section_ptr)));
+					auto instruction = parse_RV32_instruction(view_as_integral<u32>(byte_view { text_section }, section_ptr));
+					res.push_back(instruction);
 					res.back().address = section_ptr + start_address;
 				} catch(std::exception& e) {
 					std::cout << "Exception occurred: " << e.what() << std::endl;
