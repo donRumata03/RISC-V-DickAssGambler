@@ -15,6 +15,6 @@ add_library(ElfParsing
         SymbolTableEntry.h
         ElfSymbol.cpp
         ElfSymbol.h
-        )
+        LabeledProgram.cpp LabeledProgram.h)
 target_precompile_headers(ElfParsing PRIVATE ../pch.h)
 target_link_libraries(ElfParsing GenericUtils)

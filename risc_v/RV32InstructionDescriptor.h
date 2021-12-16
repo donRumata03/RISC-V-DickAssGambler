@@ -64,7 +64,7 @@ struct RV32InstructionDescriptor
 	std::optional<u32> funct7; // For those who have it
 	std::optional<ImmediateSignness> immediate_signedness; // For those who have immediates (all, excluding: { R, FULL_MATCH_VALIDATION, CSR_COMMAND }).
 	std::optional<u32> match_after_opcode; // For full-matching variant
-	bool contains_static_address = false;
+	bool contains_static_address_offset = false;
 };
 
 

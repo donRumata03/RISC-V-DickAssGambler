@@ -64,6 +64,13 @@ struct Instruction {
 	std::optional<Immediate> immediate{};
 
 	std::optional<CsrRegister> csr_register{};
+
+	std::optional<u32> maybe_get_address() const
+	{
+		return descriptor->contains_static_address_offset ?
+			std::optional(address + std::get<i32>(*immediate)) :
+			std::nullopt;
+	}
 };
 
 
