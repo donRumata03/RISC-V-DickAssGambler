@@ -8,34 +8,18 @@
 #include "ElfFile.h"
 #include "risc_v/Instruction.h"
 #include "risc_v/command_parser.h"
+#include "risc_v/base_instruction_formatter.h"
 
 class LabeledProgram
 {
 	ElfFile file;
 	std::vector<Instruction> instruction_sequence;
-	std::unordered_set<u32, u32> line_of_code_by_non_labeled_jump_target;
+	std::unordered_map<u32, u32> line_of_code_by_non_labeled_jump_target;
 
-	explicit LabeledProgram(ElfFile raw_file)
-		: file(std::move(raw_file))
-	{
-		instruction_sequence = parseInstructions(file.text_section.data, file.text_section.header.virtual_address);
+	explicit LabeledProgram(ElfFile raw_file);
 
-		usize line_of_code = 0;
-		for (const auto& instruction: instruction_sequence) {
-			if (instruction.maybe_get_address()) {
-				auto jmp_address = *instruction.maybe_get_address();
-				if (file.get_symbol_by_address(jmp_address)) {
-					line_of_code_by_non_labeled_jump_target[jmp_address] = line_of_code;
-				}
-			}
-
-			line_of_code++;
-		}
-	}
-
-	std::string render() {
-		return ""; // TODO
-	}
+	std::string render_program();
+	std::string render_instruction(const Instruction& instruction);
 };
 
 

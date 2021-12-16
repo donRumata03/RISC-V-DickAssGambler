@@ -54,7 +54,7 @@ std::string get_csr_register_name (CsrRegister int_register)
 
 #undef just_case
 
-std::string format_immediate (Immediate immediate)
+std::string format_decimal_immediate (Immediate immediate)
 {
 	if (std::holds_alternative<u32>(immediate)) {
 		return std::to_string(std::get<u32>(immediate));
@@ -77,7 +77,7 @@ std::string format_instruction (const Instruction& instruction)
 		formatted_arguments.push_back(get_int_register_name(*instruction.src_register_right));
 	}
 	if (instruction.immediate) {
-		formatted_arguments.push_back(format_immediate(*instruction.immediate));
+		formatted_arguments.push_back(format_decimal_immediate(*instruction.immediate));
 	}
 	if (instruction.csr_register) {
 		formatted_arguments.push_back(get_csr_register_name(*instruction.csr_register));
