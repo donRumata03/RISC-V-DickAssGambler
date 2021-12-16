@@ -26,7 +26,6 @@ LabeledProgram::LabeledProgram (const fs::path& elf_path)
 				line_of_code_by_non_labeled_jump_target[jmp_address] = line_of_code;
 			}
 		}
-
 	}
 }
 

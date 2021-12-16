@@ -33,7 +33,7 @@ public:
 
 	auto get_section_by_name(const std::string& name) -> std::optional<ElfSection>;
 
-	std::optional<ElfSymbol> get_symbol_by_address(u32 address) {
+	[[nodiscard]] std::optional<ElfSymbol> get_symbol_by_address(u32 address) const {
 		auto search_res = symbol_by_address.find(address);
 
 		return search_res != symbol_by_address.end() ?
