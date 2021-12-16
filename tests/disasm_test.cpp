@@ -69,6 +69,10 @@ TEST(DisAsm, JImmediate) {
 }
 
 TEST(DisAsm, IImmediate) {
+	//    00000793          	addi	a5,zero,0
+	let instr_zero = parse_RV32_instruction(0x00000793);
+
+
 	//    4fc50513          	addi	a0, a0, 1276
 	let instr_pos = parse_RV32_instruction(0x4fc50513);
 
@@ -76,6 +80,7 @@ TEST(DisAsm, IImmediate) {
 	let instr_neg = parse_RV32_instruction(0xdfc18193);
 
 	EXPECT_EQ(std::get<i32>(*instr_pos.immediate), 1276);
+	EXPECT_EQ(std::get<i32>(*instr_zero.immediate), 0);
 	EXPECT_EQ(std::get<i32>(*instr_neg.immediate), -516);
 }
 
