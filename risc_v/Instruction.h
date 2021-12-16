@@ -131,9 +131,9 @@ struct Instruction {
 			auto real_imm = *immediate;
 			auto i = real_imm.index();
 			auto i1 = immediate->index();
-			assert(!immediate->valueless_by_exception());
-			assert(!real_imm.valueless_by_exception());
-			assert(std::holds_alternative<i32>(real_imm));
+//			assert(!immediate->valueless_by_exception());
+//			assert(!real_imm.valueless_by_exception());
+//			assert(std::holds_alternative<i32>(real_imm));
 			return u32(address + std::get<i32>(real_imm));
 		}
 

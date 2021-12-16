@@ -88,6 +88,93 @@ std::string format_instruction (const Instruction& instruction)
 	);
 }
 
+/////////////////  /////////////////  /////////////////  /////////////////  /////////////////  /////////////////  /////////////////
+
+std::optional<std::string> get_label_for_address (
+		const ElfFile& file,
+		const std::unordered_map<u32, u32>& line_of_code_by_non_labeled_jump_target,
+		u32 address
+)
+{
+	std::string symbol_name;
+	if (file.get_symbol_by_address(address)) {
+		return (*file.get_symbol_by_address(address)).name;
+	}
+
+	auto loc_label_try = line_of_code_by_non_labeled_jump_target.find(address);
+	if (loc_label_try != line_of_code_by_non_labeled_jump_target.end()) {
+		auto loc_number = *loc_label_try;
+		return string_format("LOC_%05d", loc_number.second);
+	}
+
+	return {};
+}
+
+std::string render_instruction (
+		const ElfFile& file,
+        const std::unordered_map<u32, u32>& line_of_code_by_non_labeled_jump_target,
+		const Instruction& instruction
+		)
+{
+	std::vector<std::string> formatted_arguments;
+
+	if (instruction.dest_register) {
+		formatted_arguments.push_back(get_int_register_name(*instruction.dest_register));
+	}
+	if (instruction.src_register_left) {
+		formatted_arguments.push_back(get_int_register_name(*instruction.src_register_left));
+	}
+	if (instruction.src_register_right) {
+		formatted_arguments.push_back(get_int_register_name(*instruction.src_register_right));
+	}
+	if (instruction.immediate) {
+		std::string formatted_immediate;
+
+		if (instruction.maybe_get_jmp_address()) {
+			// Immediate should be formatted with address
+			auto jmp_address = *instruction.maybe_get_jmp_address();
+			formatted_immediate = *get_label_for_address(file, line_of_code_by_non_labeled_jump_target, jmp_address);
+		} else {
+			formatted_immediate = format_decimal_immediate(*instruction.immediate);
+		}
+
+		formatted_arguments.push_back(formatted_immediate);
+	}
+	if (instruction.csr_register) {
+		formatted_arguments.push_back(get_csr_register_name(*instruction.csr_register));
+	}
+
+	return instruction.descriptor->name + (formatted_arguments.empty() ?
+	                                       "" :
+	                                       " " + join(formatted_arguments, ", ")
+	);
+}
+
+std::string render_program (
+		const ElfFile& file,
+		const std::vector<Instruction>& instruction_sequence,
+		const std::unordered_map<u32, u32>& line_of_code_by_non_labeled_jump_target
+) {
+	std::vector<std::string> formatted_lines;
+	formatted_lines.reserve(instruction_sequence.size());
+
+	for (const auto& instruction: instruction_sequence) {
+		std::string formatted_instruction = bool(instruction.descriptor) ?
+		                                    render_instruction(file, line_of_code_by_non_labeled_jump_target, instruction) :
+		                                    std::string("unknown-command");
+
+		auto maybe_label = get_label_for_address(file, line_of_code_by_non_labeled_jump_target, instruction.address);
+
+		formatted_lines.push_back(bool(maybe_label) ?
+		                          string_format("%08x %10s: %s", instruction.address, (*maybe_label).c_str(), formatted_instruction.c_str()) :
+		                          string_format("%08x %10s %s", instruction.address, "", formatted_instruction.c_str())
+		);
+	}
+
+	return join(formatted_lines, "\n");
+}
+
+
 std::string format_instructions (const ElfFile& file, const std::vector<Instruction>& instruction_sequence)
 {
 	/// First, compute non-labeled targets:
@@ -98,37 +185,23 @@ std::string format_instructions (const ElfFile& file, const std::vector<Instruct
 
 		if (instruction.maybe_get_jmp_address()) {
 			auto jmp_address = *instruction.maybe_get_jmp_address();
-			if (file.get_symbol_by_address(jmp_address)) {
+			if (!file.get_symbol_by_address(jmp_address)) {
 				line_of_code_by_non_labeled_jump_target[jmp_address] = line_of_code;
 			}
 		}
 
 	}
 
-
-
-	std::vector<std::string> formatted(instruction_sequence.size());
-	std::transform(instruction_sequence.begin(), instruction_sequence.end(), formatted.begin(), [](const Instruction& instruction){
-		std::string formatted_instruction = bool(instruction.descriptor) ?
-			format_instruction(instruction) :
-			std::string("unknown-command");
-
-		return string_format("%08x %10s %s", instruction.address, "", formatted_instruction.c_str());
-	});
-
-	return join(formatted, "\n");
+	return render_program(file, instruction_sequence, line_of_code_by_non_labeled_jump_target);
 }
 
-
-std::string format_labeled_instructions (const std::vector<Instruction>& instructions)
+std::string format_non_labeled_instructions (const std::vector<Instruction>& instructions)
 {
-
-
 	std::vector<std::string> formatted(instructions.size());
 	std::transform(instructions.begin(), instructions.end(), formatted.begin(), [](const Instruction& instruction){
 		std::string formatted_instruction = bool(instruction.descriptor) ?
-			format_instruction(instruction) :
-			std::string("unknown-command");
+		                                    format_instruction(instruction) :
+		                                    std::string("unknown-command");
 
 		return string_format("%08x %10s %s", instruction.address, "", formatted_instruction.c_str());
 	});

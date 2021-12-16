@@ -17,7 +17,7 @@ inline std::string do_primitive_disasm(const fs::path& filename) {
 	auto text_section = elf.text_section;
 	auto symbols = elf.symbols;
 
-	return format_instructions(parseInstructions(text_section.data, text_section.header.virtual_address));
+	return format_instructions(elf, parseInstructions(text_section.data, text_section.header.virtual_address));
 }
 
 inline std::string do_labeled_disasm(const fs::path& filename) {

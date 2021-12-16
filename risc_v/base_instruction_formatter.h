@@ -5,6 +5,7 @@
 #pragma once
 
 #include "Instruction.h"
+#include "elf_parsing/ElfFile.h"
 
 
 std::string get_int_register_name(IntRegister int_register);
@@ -15,7 +16,9 @@ std::string format_decimal_immediate(Immediate immediate);
 
 std::string format_instruction(const Instruction& instruction);
 
-std::string format_instructions(const std::vector<Instruction>& instructions);
+std::string format_non_labeled_instructions (const std::vector<Instruction>& instructions);
+
+std::string format_instructions(const ElfFile& file, const std::vector<Instruction>& instructions);
 
 inline std::ostream& operator<< (std::ostream& os, const CsrRegister& reg)
 {
