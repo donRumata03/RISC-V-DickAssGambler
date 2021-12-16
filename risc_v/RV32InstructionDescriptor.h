@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <ostream>
 #include "pch.h"
 
 enum class RV32InstructionPattern
@@ -54,6 +55,23 @@ enum class ImmediateSignness
 	ZERO_EXTENDED_UNSIGNED,
 };
 
+inline std::ostream& operator<< (std::ostream& os, const ImmediateSignness& opt) {
+	switch (opt) {
+		case ImmediateSignness::SIGNED:
+			os << "SIGNED";
+			break;
+		case ImmediateSignness::UNSIGNED:
+			os << "UNSIGNED";
+			break;
+		case ImmediateSignness::ZERO_EXTENDED_UNSIGNED:
+			os << "ZERO_EXTENDED_UNSIGNED";
+			break;
+	}
+	return os;
+}
+
+
+
 struct RV32InstructionDescriptor
 {
 	std::string name;
@@ -65,6 +83,25 @@ struct RV32InstructionDescriptor
 	std::optional<ImmediateSignness> immediate_signedness; // For those who have immediates (all, excluding: { R, FULL_MATCH_VALIDATION, CSR_COMMAND }).
 	std::optional<u32> match_after_opcode; // For full-matching variant
 	bool contains_static_address_offset = false;
+
+	bool operator== (const RV32InstructionDescriptor& rhs) const
+	{
+		return name == rhs.name &&
+		       pattern == rhs.pattern &&
+		       opcode == rhs.opcode &&
+		       funct3 == rhs.funct3 &&
+		       funct7 == rhs.funct7 &&
+		       immediate_signedness == rhs.immediate_signedness &&
+		       match_after_opcode == rhs.match_after_opcode &&
+		       contains_static_address_offset == rhs.contains_static_address_offset;
+	}
+
+	bool operator!= (const RV32InstructionDescriptor& rhs) const
+	{
+		return !(rhs == *this);
+	}
+
+	friend std::ostream& operator<< (std::ostream& os, const RV32InstructionDescriptor& descriptor);
 };
 
 

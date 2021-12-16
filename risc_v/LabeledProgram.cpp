@@ -9,9 +9,17 @@ LabeledProgram::LabeledProgram (const fs::path& elf_path)
 	file = ElfFile(elf_path);
 
 	instruction_sequence = parseInstructions(file->text_section.data, file->text_section.header.virtual_address);
+	std::cout << instruction_sequence << std::endl;
+	std::cout << std::endl;
+	for (const auto& instr : instruction_sequence) {
+		if (instr.immediate) {
+			assert(!instr.immediate->valueless_by_exception());
+		}
+	}
 
 	for (usize line_of_code = 0; line_of_code < instruction_sequence.size(); ++line_of_code) {
 		auto instruction = instruction_sequence[line_of_code];
+
 		if (instruction.maybe_get_jmp_address()) {
 			auto jmp_address = *instruction.maybe_get_jmp_address();
 			if (file->get_symbol_by_address(jmp_address)) {

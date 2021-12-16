@@ -69,6 +69,11 @@ TEST(BitUtils, TestConstructingFromBitSequence) {
 }
 
 TEST(BitUtils, ShiftingVariant) {
-	EXPECT_EQ(std::get<u32>(shifted_left({16u}, 12)), 10088u);
-	EXPECT_EQ(std::get<i32>(shifted_left({1}, 12)), 2);
+	auto unsigned_shifted = shifted_left({12u}, 16);
+	EXPECT_TRUE(std::holds_alternative<u32>(unsigned_shifted));
+	EXPECT_EQ(std::get<u32>(unsigned_shifted), 786432u);
+
+	auto signed_shifted = shifted_left({7}, 11);
+	EXPECT_TRUE(std::holds_alternative<i32>(signed_shifted));
+	EXPECT_EQ(std::get<i32>(signed_shifted), 14336);
 }
