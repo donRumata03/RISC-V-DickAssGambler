@@ -64,21 +64,22 @@ struct RV32InstructionDescriptor
 	std::optional<u32> funct7; // For those who have it
 	std::optional<ImmediateSignness> immediate_signedness; // For those who have immediates (all, excluding: { R, FULL_MATCH_VALIDATION, CSR_COMMAND }).
 	std::optional<u32> match_after_opcode; // For full-matching variant
+	bool contains_static_address = false;
 };
 
 
 inline std::vector<RV32InstructionDescriptor> rv_32_instruction_descriptors {
-		{ "lui",   RV32InstructionPattern::U, 0b0110111, {}, {}, ImmediateSignness::SIGNED },
-		{ "auipc", RV32InstructionPattern::U, 0b0010111, {}, {}, ImmediateSignness::SIGNED },
-		{ "jal",   RV32InstructionPattern::UJ, 0b1101111, {}, {}, ImmediateSignness::SIGNED},
-		{ "jalr",  RV32InstructionPattern::I, 0b1100111, 0b000, {}, ImmediateSignness::SIGNED },
+		{ "lui",   RV32InstructionPattern::U, 0b0110111, {}, {}, ImmediateSignness::SIGNED, {}, false },
+		{ "auipc", RV32InstructionPattern::U, 0b0010111, {}, {}, ImmediateSignness::SIGNED, {}, false },
+		{ "jal",   RV32InstructionPattern::UJ, 0b1101111, {}, {}, ImmediateSignness::SIGNED, {}, true},
+		{ "jalr",  RV32InstructionPattern::I, 0b1100111, 0b000, {}, ImmediateSignness::SIGNED, {}, false },
 
-		{ "beq",   RV32InstructionPattern::SB, 0b1100011, 0b000, {}, ImmediateSignness::SIGNED },
-		{ "bne",   RV32InstructionPattern::SB, 0b1100011, 0b001, {}, ImmediateSignness::SIGNED },
-		{ "blt",   RV32InstructionPattern::SB, 0b1100011, 0b100, {}, ImmediateSignness::SIGNED },
-		{ "bge",   RV32InstructionPattern::SB, 0b1100011, 0b101, {}, ImmediateSignness::SIGNED },
-		{ "bltu",  RV32InstructionPattern::SB, 0b1100011, 0b110, {}, ImmediateSignness::SIGNED },
-		{ "bgeu",  RV32InstructionPattern::SB, 0b1100011, 0b111, {}, ImmediateSignness::SIGNED },
+		{ "beq",   RV32InstructionPattern::SB, 0b1100011, 0b000, {}, ImmediateSignness::SIGNED, {}, true },
+		{ "bne",   RV32InstructionPattern::SB, 0b1100011, 0b001, {}, ImmediateSignness::SIGNED, {}, true },
+		{ "blt",   RV32InstructionPattern::SB, 0b1100011, 0b100, {}, ImmediateSignness::SIGNED, {}, true },
+		{ "bge",   RV32InstructionPattern::SB, 0b1100011, 0b101, {}, ImmediateSignness::SIGNED, {}, true },
+		{ "bltu",  RV32InstructionPattern::SB, 0b1100011, 0b110, {}, ImmediateSignness::SIGNED, {}, true },
+		{ "bgeu",  RV32InstructionPattern::SB, 0b1100011, 0b111, {}, ImmediateSignness::SIGNED, {}, true },
 
 		{ "lb",    RV32InstructionPattern::I, 0b0000011, 0b000, {}, ImmediateSignness::SIGNED },
 		{ "lh",    RV32InstructionPattern::I, 0b0000011, 0b001, {}, ImmediateSignness::SIGNED },
