@@ -57,6 +57,7 @@ TEST(DisAsm, JImmediate) {
  */
 
 	//	0600006f          	jal	zero,104e8 <__register_exitproc>
+	// Immediate = 96
 	let instr_forward = parse_RV32_instruction(0x0600006f);
 
 	//	f5dff06f          	jal	zero,103a0 <__call_exitprocs+0x48>
