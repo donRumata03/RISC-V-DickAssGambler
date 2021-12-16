@@ -21,6 +21,7 @@
 #include <numeric>
 #include <cstddef>
 #include <iterator>
+#include <unordered_map>
 
 #include <format>
 
