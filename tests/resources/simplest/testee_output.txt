@@ -344,63 +344,63 @@
 
 .symtab
 Symbol Value              Size Type     Bind     Vis       Index Name
-[   0] 0x0                   0 (((T)))  (((B)))  (((V)))  (((I))) 
-[   1] 0x10074               0 (((T)))  (((B)))  (((V)))  (((I))) 
-[   2] 0x115CC               0 (((T)))  (((B)))  (((V)))  (((I))) 
-[   3] 0x115D0               0 (((T)))  (((B)))  (((V)))  (((I))) 
-[   4] 0x115D8               0 (((T)))  (((B)))  (((V)))  (((I))) 
-[   5] 0x115E0               0 (((T)))  (((B)))  (((V)))  (((I))) 
-[   6] 0x11A08               0 (((T)))  (((B)))  (((V)))  (((I))) 
-[   7] 0x11A14               0 (((T)))  (((B)))  (((V)))  (((I))) 
-[   8] 0x0                   0 (((T)))  (((B)))  (((V)))  (((I))) 
-[   9] 0x0                   0 (((T)))  (((B)))  (((V)))  (((I))) 
-[  10] 0x0                   0 (((T)))  (((B)))  (((V)))  (((I))) __call_atexit.c
-[  11] 0x10074              24 (((T)))  (((B)))  (((V)))  (((I))) register_fini
-[  12] 0x0                   0 (((T)))  (((B)))  (((V)))  (((I))) crtstuff.c
-[  13] 0x115CC               0 (((T)))  (((B)))  (((V)))  (((I))) 
-[  14] 0x100D8               0 (((T)))  (((B)))  (((V)))  (((I))) __do_global_dtors_aux
-[  15] 0x11A14               1 (((T)))  (((B)))  (((V)))  (((I))) completed.1
-[  16] 0x115D8               0 (((T)))  (((B)))  (((V)))  (((I))) __do_global_dtors_aux_fini_array_entry
-[  17] 0x10124               0 (((T)))  (((B)))  (((V)))  (((I))) frame_dummy
-[  18] 0x11A18              24 (((T)))  (((B)))  (((V)))  (((I))) object.0
-[  19] 0x115D4               0 (((T)))  (((B)))  (((V)))  (((I))) __frame_dummy_init_array_entry
-[  20] 0x0                   0 (((T)))  (((B)))  (((V)))  (((I))) test.c
-[  21] 0x0                   0 (((T)))  (((B)))  (((V)))  (((I))) exit.c
-[  22] 0x0                   0 (((T)))  (((B)))  (((V)))  (((I))) impure.c
-[  23] 0x115E0            1064 (((T)))  (((B)))  (((V)))  (((I))) impure_data
-[  24] 0x0                   0 (((T)))  (((B)))  (((V)))  (((I))) init.c
-[  25] 0x0                   0 (((T)))  (((B)))  (((V)))  (((I))) atexit.c
-[  26] 0x0                   0 (((T)))  (((B)))  (((V)))  (((I))) fini.c
-[  27] 0x0                   0 (((T)))  (((B)))  (((V)))  (((I))) __atexit.c
-[  28] 0x0                   0 (((T)))  (((B)))  (((V)))  (((I))) sys_exit.c
-[  29] 0x0                   0 (((T)))  (((B)))  (((V)))  (((I))) errno.c
-[  30] 0x0                   0 (((T)))  (((B)))  (((V)))  (((I))) crtstuff.c
-[  31] 0x115CC               0 (((T)))  (((B)))  (((V)))  (((I))) __FRAME_END__
-[  32] 0x0                   0 (((T)))  (((B)))  (((V)))  (((I))) 
-[  33] 0x115DC               0 (((T)))  (((B)))  (((V)))  (((I))) __fini_array_end
-[  34] 0x115D8               0 (((T)))  (((B)))  (((V)))  (((I))) __fini_array_start
-[  35] 0x115D8               0 (((T)))  (((B)))  (((V)))  (((I))) __init_array_end
-[  36] 0x115D0               0 (((T)))  (((B)))  (((V)))  (((I))) __preinit_array_end
-[  37] 0x115D0               0 (((T)))  (((B)))  (((V)))  (((I))) __init_array_start
-[  38] 0x115D0               0 (((T)))  (((B)))  (((V)))  (((I))) __preinit_array_start
-[  39] 0x11DE0               0 (((T)))  (((B)))  (((V)))  (((I))) __global_pointer$
-[  40] 0x105C4               8 (((T)))  (((B)))  (((V)))  (((I))) __errno
-[  41] 0x11A08               0 (((T)))  (((B)))  (((V)))  (((I))) __SDATA_BEGIN__
-[  42] 0x11A0C               0 (((T)))  (((B)))  (((V)))  (((I))) __dso_handle
-[  43] 0x11A08               4 (((T)))  (((B)))  (((V)))  (((I))) _global_impure_ptr
-[  44] 0x101E0             156 (((T)))  (((B)))  (((V)))  (((I))) __libc_init_array
-[  45] 0x1048C              92 (((T)))  (((B)))  (((V)))  (((I))) __libc_fini_array
-[  46] 0x10358             288 (((T)))  (((B)))  (((V)))  (((I))) __call_exitprocs
-[  47] 0x1008C              76 (((T)))  (((B)))  (((V)))  (((I))) _start
-[  48] 0x104E8             152 (((T)))  (((B)))  (((V)))  (((I))) __register_exitproc
-[  49] 0x11A30               0 (((T)))  (((B)))  (((V)))  (((I))) __BSS_END__
-[  50] 0x11A14               0 (((T)))  (((B)))  (((V)))  (((I))) __bss_start
-[  51] 0x1027C             220 (((T)))  (((B)))  (((V)))  (((I))) memset
-[  52] 0x10144             108 (((T)))  (((B)))  (((V)))  (((I))) main
-[  53] 0x10478              20 (((T)))  (((B)))  (((V)))  (((I))) atexit
-[  54] 0x11A10               4 (((T)))  (((B)))  (((V)))  (((I))) _impure_ptr
-[  55] 0x115E0               0 (((T)))  (((B)))  (((V)))  (((I))) __DATA_BEGIN__
-[  56] 0x11A14               0 (((T)))  (((B)))  (((V)))  (((I))) _edata
-[  57] 0x11A30               0 (((T)))  (((B)))  (((V)))  (((I))) _end
-[  58] 0x101B0              48 (((T)))  (((B)))  (((V)))  (((I))) exit
-[  59] 0x10580              68 (((T)))  (((B)))  (((V)))  (((I))) _exit
+[   0] 0x0                   0 NOTYPE   LOCAL    DEFAULT  (((I))) 
+[   1] 0x10074               0 SECTION  LOCAL    DEFAULT  (((I))) 
+[   2] 0x115CC               0 SECTION  LOCAL    DEFAULT  (((I))) 
+[   3] 0x115D0               0 SECTION  LOCAL    DEFAULT  (((I))) 
+[   4] 0x115D8               0 SECTION  LOCAL    DEFAULT  (((I))) 
+[   5] 0x115E0               0 SECTION  LOCAL    DEFAULT  (((I))) 
+[   6] 0x11A08               0 SECTION  LOCAL    DEFAULT  (((I))) 
+[   7] 0x11A14               0 SECTION  LOCAL    DEFAULT  (((I))) 
+[   8] 0x0                   0 SECTION  LOCAL    DEFAULT  (((I))) 
+[   9] 0x0                   0 SECTION  LOCAL    DEFAULT  (((I))) 
+[  10] 0x0                   0 FILE     LOCAL    DEFAULT  (((I))) __call_atexit.c
+[  11] 0x10074              24 FUNC     LOCAL    DEFAULT  (((I))) register_fini
+[  12] 0x0                   0 FILE     LOCAL    DEFAULT  (((I))) crtstuff.c
+[  13] 0x115CC               0 OBJECT   LOCAL    DEFAULT  (((I))) 
+[  14] 0x100D8               0 FUNC     LOCAL    DEFAULT  (((I))) __do_global_dtors_aux
+[  15] 0x11A14               1 OBJECT   LOCAL    DEFAULT  (((I))) completed.1
+[  16] 0x115D8               0 OBJECT   LOCAL    DEFAULT  (((I))) __do_global_dtors_aux_fini_array_entry
+[  17] 0x10124               0 FUNC     LOCAL    DEFAULT  (((I))) frame_dummy
+[  18] 0x11A18              24 OBJECT   LOCAL    DEFAULT  (((I))) object.0
+[  19] 0x115D4               0 OBJECT   LOCAL    DEFAULT  (((I))) __frame_dummy_init_array_entry
+[  20] 0x0                   0 FILE     LOCAL    DEFAULT  (((I))) test.c
+[  21] 0x0                   0 FILE     LOCAL    DEFAULT  (((I))) exit.c
+[  22] 0x0                   0 FILE     LOCAL    DEFAULT  (((I))) impure.c
+[  23] 0x115E0            1064 OBJECT   LOCAL    DEFAULT  (((I))) impure_data
+[  24] 0x0                   0 FILE     LOCAL    DEFAULT  (((I))) init.c
+[  25] 0x0                   0 FILE     LOCAL    DEFAULT  (((I))) atexit.c
+[  26] 0x0                   0 FILE     LOCAL    DEFAULT  (((I))) fini.c
+[  27] 0x0                   0 FILE     LOCAL    DEFAULT  (((I))) __atexit.c
+[  28] 0x0                   0 FILE     LOCAL    DEFAULT  (((I))) sys_exit.c
+[  29] 0x0                   0 FILE     LOCAL    DEFAULT  (((I))) errno.c
+[  30] 0x0                   0 FILE     LOCAL    DEFAULT  (((I))) crtstuff.c
+[  31] 0x115CC               0 OBJECT   LOCAL    DEFAULT  (((I))) __FRAME_END__
+[  32] 0x0                   0 FILE     LOCAL    DEFAULT  (((I))) 
+[  33] 0x115DC               0 NOTYPE   LOCAL    DEFAULT  (((I))) __fini_array_end
+[  34] 0x115D8               0 NOTYPE   LOCAL    DEFAULT  (((I))) __fini_array_start
+[  35] 0x115D8               0 NOTYPE   LOCAL    DEFAULT  (((I))) __init_array_end
+[  36] 0x115D0               0 NOTYPE   LOCAL    DEFAULT  (((I))) __preinit_array_end
+[  37] 0x115D0               0 NOTYPE   LOCAL    DEFAULT  (((I))) __init_array_start
+[  38] 0x115D0               0 NOTYPE   LOCAL    DEFAULT  (((I))) __preinit_array_start
+[  39] 0x11DE0               0 NOTYPE   GLOBAL   DEFAULT  (((I))) __global_pointer$
+[  40] 0x105C4               8 FUNC     GLOBAL   DEFAULT  (((I))) __errno
+[  41] 0x11A08               0 NOTYPE   GLOBAL   DEFAULT  (((I))) __SDATA_BEGIN__
+[  42] 0x11A0C               0 OBJECT   GLOBAL   HIDDEN   (((I))) __dso_handle
+[  43] 0x11A08               4 OBJECT   GLOBAL   DEFAULT  (((I))) _global_impure_ptr
+[  44] 0x101E0             156 FUNC     GLOBAL   DEFAULT  (((I))) __libc_init_array
+[  45] 0x1048C              92 FUNC     GLOBAL   DEFAULT  (((I))) __libc_fini_array
+[  46] 0x10358             288 FUNC     GLOBAL   DEFAULT  (((I))) __call_exitprocs
+[  47] 0x1008C              76 FUNC     GLOBAL   DEFAULT  (((I))) _start
+[  48] 0x104E8             152 FUNC     GLOBAL   DEFAULT  (((I))) __register_exitproc
+[  49] 0x11A30               0 NOTYPE   GLOBAL   DEFAULT  (((I))) __BSS_END__
+[  50] 0x11A14               0 NOTYPE   GLOBAL   DEFAULT  (((I))) __bss_start
+[  51] 0x1027C             220 FUNC     GLOBAL   DEFAULT  (((I))) memset
+[  52] 0x10144             108 FUNC     GLOBAL   DEFAULT  (((I))) main
+[  53] 0x10478              20 FUNC     GLOBAL   DEFAULT  (((I))) atexit
+[  54] 0x11A10               4 OBJECT   GLOBAL   DEFAULT  (((I))) _impure_ptr
+[  55] 0x115E0               0 NOTYPE   GLOBAL   DEFAULT  (((I))) __DATA_BEGIN__
+[  56] 0x11A14               0 NOTYPE   GLOBAL   DEFAULT  (((I))) _edata
+[  57] 0x11A30               0 NOTYPE   GLOBAL   DEFAULT  (((I))) _end
+[  58] 0x101B0              48 FUNC     GLOBAL   DEFAULT  (((I))) exit
+[  59] 0x10580              68 FUNC     GLOBAL   DEFAULT  (((I))) _exit

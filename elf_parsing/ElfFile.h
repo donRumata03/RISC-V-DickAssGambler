@@ -56,7 +56,14 @@ public:
 			formatted_lines.push_back(
 					string_format(
 							"[%4i] 0x%-15X %5i %-8s %-8s %-8s %6s %s",
-							index, symbol.entry.st_value, symbol.entry.st_size, "(((T)))", "(((B)))", "(((V)))", "(((I)))", symbol.name.c_str()
+							index,
+							symbol.entry.st_value,
+							symbol.entry.st_size,
+							symbol.entry.get_type().c_str(),
+							symbol.entry.get_bind().c_str(),
+							symbol.entry.get_visibility().c_str(),
+							"(((I)))",
+							symbol.name.c_str()
 					)
 			);
 			index++;
