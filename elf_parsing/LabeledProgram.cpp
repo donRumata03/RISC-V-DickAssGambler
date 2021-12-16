@@ -22,6 +22,22 @@ LabeledProgram::LabeledProgram (ElfFile raw_file)
 	}
 }
 
+std::optional<std::string> LabeledProgram::get_label_for_address (u32 address)
+{
+	std::string symbol_name;
+	if (file.get_symbol_by_address(address)) {
+		return (*file.get_symbol_by_address(address)).name;
+	}
+
+	auto loc_label_try = line_of_code_by_non_labeled_jump_target.find(address);
+	if (loc_label_try != line_of_code_by_non_labeled_jump_target.end()) {
+		auto loc_number = *loc_label_try;
+		return string_format("LOC_%05x", loc_number);
+	}
+
+	return {};
+}
+
 std::string LabeledProgram::render_instruction (const Instruction& instruction)
 {
 	std::vector<std::string> formatted_arguments;
@@ -40,16 +56,7 @@ std::string LabeledProgram::render_instruction (const Instruction& instruction)
 
 		if (instruction.maybe_get_jmp_address()) {
 			// Immediate should be formatted with address
-			auto jmp_address = *instruction.maybe_get_jmp_address();
-			std::string symbol_name;
-			if (file.get_symbol_by_address(jmp_address)) {
-				symbol_name = (*file.get_symbol_by_address(jmp_address)).name;
-			} else {
-				auto loc_number = line_of_code_by_non_labeled_jump_target[jmp_address];
-				symbol_name = string_format("LOC_%05x", loc_number);
-			}
-
-			formatted_immediate = std::move(symbol_name);
+			formatted_immediate = *get_label_for_address(*instruction.maybe_get_jmp_address());
 		} else {
 			formatted_immediate = format_decimal_immediate(*instruction.immediate);
 		}
@@ -68,11 +75,20 @@ std::string LabeledProgram::render_instruction (const Instruction& instruction)
 
 std::string LabeledProgram::render_program ()
 {
-	std::vector<std::string> formatted(instruction_sequence.size());
+	std::vector<std::string> formatted_lines(instruction_sequence.size());
 
 	for (const auto& instruction: instruction_sequence) {
-		formatted.push_back(render_instruction(instruction));
+		std::string formatted_instruction = bool(instruction.descriptor) ?
+		                                    render_instruction(instruction) :
+		                                    std::string("unknown-command");
+
+		auto maybe_label = get_label_for_address(instruction.address);
+
+		formatted_lines.push_back(bool(maybe_label) ?
+				string_format("%08x %10s %s", instruction.address, "", formatted_instruction.c_str()) :
+				string_format("%08x %10s: %s", instruction.address, (*maybe_label).c_str(), formatted_instruction.c_str())
+				);
 	}
 
-	return join(formatted, "\n");
+	return join(formatted_lines, "\n");
 }
