@@ -50,6 +50,23 @@ TEST(DisAsm, BImmediate) {
 	EXPECT_EQ(std::get<i32>(*instr_backward.immediate), -80);
 }
 
+TEST(DisAsm, JImmediate) {
+/**
+ * It's only:
+ * imm[20|10:1|11|19:12] rd 1101111 JAL
+ */
+
+	//	0600006f          	jal	zero,104e8 <__register_exitproc>
+	let instr_forward = parse_RV32_instruction(0x0600006f);
+
+	//	f5dff06f          	jal	zero,103a0 <__call_exitprocs+0x48>
+	// Immediate = -164
+	let instr_backward = parse_RV32_instruction(0xf5dff06f);
+
+	EXPECT_EQ(std::get<i32>(*instr_forward.immediate), 96);
+	EXPECT_EQ(std::get<i32>(*instr_backward.immediate), -164);
+}
+
 TEST(DisAsm, IImmediate) {
 	//    4fc50513          	addi	a0, a0, 1276
 	let instr_pos = parse_RV32_instruction(0x4fc50513);
