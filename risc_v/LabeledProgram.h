@@ -5,7 +5,7 @@
 #pragma once
 
 #include "pch.h"
-#include "ElfFile.h"
+#include "elf_parsing/ElfFile.h"
 #include "risc_v/Instruction.h"
 #include "risc_v/command_parser.h"
 #include "risc_v/base_instruction_formatter.h"
