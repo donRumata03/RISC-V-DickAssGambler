@@ -20,6 +20,8 @@ std::vector<Instruction> parseInstructions (const byte_string& text_section, usi
 					auto command = view_as_integral<u32>(byte_view { text_section }, section_ptr);
 					auto instruction = parse_RV32_instruction(command);
 
+					std::cout << command << " -> " << instruction << std::endl;
+
 //					if (command == 1939) {
 //						assert(instruction.immediate);
 //						auto val = instruction.immediate.value();
@@ -31,6 +33,11 @@ std::vector<Instruction> parseInstructions (const byte_string& text_section, usi
 					auto& back_addr = back.address;
 					auto this_address = section_ptr + start_address;
 					back_addr = this_address;
+
+					std::cout << "Pushed; last: " << res.back() << std::endl;
+					std::cout << "res: " << res << std::endl;
+
+
 				} catch(std::exception& e) {
 					std::cout << "Exception occurred: " << e.what() << std::endl;
 					res.push_back({.address = static_cast<u32>(section_ptr + start_address)});
