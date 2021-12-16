@@ -41,6 +41,30 @@ public:
 			   std::nullopt;
 	}
 
+	std::string format_symtab() {
+		std::vector<std::string> formatted_lines;
+
+		formatted_lines.push_back(
+				string_format(
+						"%s %-15s %7s %-8s %-8s %-8s %6s %s",
+						"Symbol", "Value", "Size", "Type", "Bind", "Vis", "Index", "Name"
+			)
+		);
+
+		usize index = 0;
+		for (const auto& symbol: symbols) {
+			formatted_lines.push_back(
+					string_format(
+							"[%4i] 0x%-15X %5i %-8s %-8s %-8s %6s %s",
+							index, symbol.entry.st_value, symbol.entry.st_size, "(((T)))", "(((B)))", "(((V)))", "(((I)))", symbol.name.c_str()
+					)
+			);
+			index++;
+		}
+
+		return join(formatted_lines, "\n");
+	}
+
 private:
 	void read_section_headers();
 

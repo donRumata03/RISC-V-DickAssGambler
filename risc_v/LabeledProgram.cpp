@@ -87,7 +87,7 @@ std::string LabeledProgram::render_program ()
 	for (const auto& instruction: instruction_sequence) {
 		std::string formatted_instruction = bool(instruction.descriptor) ?
 		                                    render_instruction(instruction) :
-		                                    std::string("unknown-command");
+		                                    std::string("unknown_command");
 
 		auto maybe_label = get_label_for_address(instruction.address);
 
