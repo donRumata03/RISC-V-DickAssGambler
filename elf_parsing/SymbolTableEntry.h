@@ -4,10 +4,6 @@
 
 #pragma once
 
-#define ELF32_ST_BIND(info)          ((info) >> 4)
-#define ELF32_ST_TYPE(info)          ((info) & 0xf)
-#define ELF32_ST_INFO(bind, type)    (((bind)<<4)+((type)&0xf))
-#define ELF32_ST_VISIBILITY(bind, type)    (((bind)<<4)+((type)&0xf))
 
 enum class SectionTableBind
 {
@@ -38,9 +34,18 @@ enum class SectionTableVisibility
 	PROTECTED = 3
 };
 
+enum class SectionTableIndex
+{
+	ABS,
+	COMMON,
+	XINDEX,
+	UNDEF
+};
+
 std::ostream& operator << (std::ostream& out, const SectionTableBind& bind);
 std::ostream& operator << (std::ostream& out, const SectionTableType& section_table_type);
 std::ostream& operator << (std::ostream& out, const SectionTableVisibility& visibility);
+std::ostream& operator << (std::ostream& out, const SectionTableIndex& index);
 
 
 
@@ -57,9 +62,10 @@ struct SymbolTableEntry
 
 	static SymbolTableEntry construct_from_bytes(byte_view bytes);
 
-	std::string get_visibility() const;
-	std::string get_bind() const;
-	std::string get_type() const;
+	[[nodiscard]] std::string get_visibility() const;
+	[[nodiscard]] std::string get_bind() const;
+	[[nodiscard]] std::string get_type() const;
+	[[nodiscard]] std::string get_index() const;
 };
 
 

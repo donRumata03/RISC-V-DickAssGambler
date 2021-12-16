@@ -64,6 +64,31 @@ std::ostream& operator<< (std::ostream& out, const SectionTableType& section_tab
 	return out;
 }
 
+std::ostream& operator<< (std::ostream& out, const SectionTableIndex& index)
+{
+	switch (index) {
+
+		case SectionTableIndex::ABS:
+			out << "ABS";
+			break;
+		case SectionTableIndex::COMMON:
+			out << "COMMON";
+			break;
+		case SectionTableIndex::XINDEX:
+			out << "XINDEX";
+			break;
+		case SectionTableIndex::UNDEF:
+			out << "UNDEF";
+			break;
+
+		default:
+			out << std::to_string(usize(index));
+			break;
+	}
+
+	return out;
+}
+
 
 SymbolTableEntry SymbolTableEntry::construct_from_bytes (byte_view bytes)
 {
@@ -87,22 +112,29 @@ SymbolTableEntry SymbolTableEntry::construct_from_bytes (byte_view bytes)
 
 std::string SymbolTableEntry::get_visibility () const
 {
-	u8 vis_bytes = st_other & 0b11;
+	u8 vis_bits = st_other & 0b11;
 
-	return to_string(SectionTableVisibility(vis_bytes));
+	return to_string(SectionTableVisibility(vis_bits));
 }
 
 std::string SymbolTableEntry::get_bind () const
 {
-	u8 bind_bytes = st_info >> 4;
+	u8 bind_bits = st_info >> 4;
 
-	return to_string(SectionTableBind(bind_bytes));
+	return to_string(SectionTableBind(bind_bits));
 }
 
 
 std::string SymbolTableEntry::get_type () const
 {
-	u8 vis_bytes = st_info & 0xf;
+	u8 vis_bits = st_info & 0xf;
 
-	return to_string(SectionTableType(vis_bytes));
+	return to_string(SectionTableType(vis_bits));
+}
+
+std::string SymbolTableEntry::get_index () const
+{
+	u8 index_bits = st_shndx;
+
+	return to_string(SectionTableIndex(index_bits));
 }

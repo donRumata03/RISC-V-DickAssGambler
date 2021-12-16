@@ -62,7 +62,7 @@ public:
 							symbol.entry.get_type().c_str(),
 							symbol.entry.get_bind().c_str(),
 							symbol.entry.get_visibility().c_str(),
-							"(((I)))",
+							symbol.entry.get_index().c_str(),
 							symbol.name.c_str()
 					)
 			);
