@@ -100,3 +100,20 @@ std::string format_instructions (const std::vector<Instruction>& instructions)
 
 	return join(formatted, "\n");
 }
+
+
+std::string format_labeled_instructions (const std::vector<Instruction>& instructions)
+{
+
+
+	std::vector<std::string> formatted(instructions.size());
+	std::transform(instructions.begin(), instructions.end(), formatted.begin(), [](const Instruction& instruction){
+		std::string formatted_instruction = bool(instruction.descriptor) ?
+			format_instruction(instruction) :
+			std::string("unknown-command");
+
+		return string_format("%08x %10s %s", instruction.address, "", formatted_instruction.c_str());
+	});
+
+	return join(formatted, "\n");
+}
